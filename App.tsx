@@ -1,26 +1,21 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import NailPolish from "@assets/svgs/nail-polish.svg";
+import { StyleSheet, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
+import { AuthStack } from "@navigations";
+import { colors } from "@utils";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your apdewdwedfefwp!</Text>
-      <NailPolish
-        width={300}
-        height={300}
-        style={{ transform: [{ rotate: "-15deg" }] }}
-      />
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <AuthStack />
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: colors.white,
+    paddingTop: 60,
+    paddingHorizontal: 20,
   },
 });

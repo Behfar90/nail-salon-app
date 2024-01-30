@@ -11,7 +11,11 @@
     "target": "esnext",
     "baseUrl": "./",
     "paths": {
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@utils": ["src/utils/index.ts"],
+      "@navigations": ["src/navigations/index.ts"],
+      "@screens": ["src/screens/index.ts"],
+      "@components": ["src/components/index.ts"]
     }
   },
   "extends": "expo/tsconfig.base"
