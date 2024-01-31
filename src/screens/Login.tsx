@@ -56,10 +56,16 @@ export function Login() {
         />
         <Text style={styles.otherAuthSeparator}>Or, login with ...</Text>
         <View style={styles.iconsContainer}>
-          <TouchableOpacity style={styles.authIcon}>
+          <TouchableOpacity
+            style={styles.authIcon}
+            onPress={() => console.log("Google svg")}
+          >
             <GoogleSVG width={30} height={30} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.authIcon}>
+          <TouchableOpacity
+            style={styles.authIcon}
+            onPress={() => console.log("FB svg")}
+          >
             <FacebookSVG width={24} height={24} />
           </TouchableOpacity>
         </View>

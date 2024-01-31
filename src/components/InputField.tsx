@@ -24,7 +24,7 @@ export function InputField({
   fieldButtonFunction?: any;
 }) {
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
       {icon}
       {inputType === "password" ? (
         <TextInput

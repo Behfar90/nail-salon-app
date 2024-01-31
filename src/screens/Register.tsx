@@ -42,10 +42,16 @@ export function Register() {
         </View>
         <Text style={styles.registerText}>Register</Text>
         <View style={styles.iconsContainer}>
-          <TouchableOpacity style={styles.authIcon}>
+          <TouchableOpacity
+            style={styles.authIcon}
+            onPress={() => console.log("Google svg")}
+          >
             <GoogleSVG width={30} height={30} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.authIcon}>
+          <TouchableOpacity
+            style={styles.authIcon}
+            onPress={() => console.log("FB svg")}
+          >
             <FacebookSVG width={24} height={24} />
           </TouchableOpacity>
         </View>
@@ -65,11 +71,6 @@ export function Register() {
           label={"Confirm Password"}
           icon={passwordIcon}
           inputType="password"
-        />
-        <InputField
-          label={"Date of Birth"}
-          icon={passwordIcon}
-          keyboardType={"phone-pad"}
         />
 
         <ActionButton
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   registerText: {
     fontSize: 28,
     fontWeight: "500",
-    marginVertical: 20,
+    marginVertical: 30,
     color: colors.darkGray,
   },
   registerBtn: {
@@ -140,6 +141,15 @@ const styles = StyleSheet.create({
   primaryText: {
     color: colors.primary,
     fontWeight: "700",
+  },
+  datePickerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderBottomColor: colors.lightGray,
+    borderBottomWidth: 1,
+    paddingBottom: 8,
+    marginBottom: 30,
+    gap: 10,
   },
   registerContainer: {
     flexDirection: "row",
