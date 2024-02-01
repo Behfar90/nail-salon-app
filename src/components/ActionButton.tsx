@@ -14,7 +14,7 @@ export function ActionButton({
 }) {
   return (
     <TouchableOpacity style={touchableStyle} onPress={onPress}>
-      <Text style={textStyle}>{label}</Text>
+      <Text style={textStyle}>{label} and sth</Text>
     </TouchableOpacity>
   );
 }
