@@ -12,16 +12,20 @@ export function InputField({
   label,
   icon,
   inputType,
+  inputValue,
+  inputChangeHandler,
   keyboardType,
   fieldButtonLabel,
-  fieldButtonFunction,
+  fieldButtonClickHandler,
 }: {
   label: string;
   icon: React.ReactNode;
   inputType?: string;
+  inputValue?: string;
+  inputChangeHandler?: (arg0?: any) => void;
   keyboardType?: any;
   fieldButtonLabel?: string;
-  fieldButtonFunction?: any;
+  fieldButtonClickHandler?: () => void;
 }) {
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -29,6 +33,8 @@ export function InputField({
       {inputType === "password" ? (
         <TextInput
           placeholder={label}
+          value={inputValue}
+          onChangeText={inputChangeHandler}
           keyboardType={keyboardType}
           style={styles.input}
           secureTextEntry={true}
@@ -36,11 +42,13 @@ export function InputField({
       ) : (
         <TextInput
           placeholder={label}
+          value={inputValue}
+          onChangeText={inputChangeHandler}
           keyboardType={keyboardType}
           style={styles.input}
         />
       )}
-      <TouchableOpacity onPress={fieldButtonFunction}>
+      <TouchableOpacity onPress={fieldButtonClickHandler}>
         <Text style={styles.fieldButtonLabel}>{fieldButtonLabel}</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
