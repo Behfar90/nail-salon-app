@@ -1,12 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  TextInput,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "@utils";
@@ -17,6 +9,10 @@ import FacebookSVG from "@assets/svgs/facebook.svg";
 import { ActionButton, InputField } from "@components";
 
 export function Login() {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const navigation = useNavigation();
   const emailIcon = (
     <MaterialIcons name="alternate-email" size={20} color={colors.darkGray} />
@@ -25,60 +21,74 @@ export function Login() {
     <Ionicons name="lock-closed-outline" size={20} color={colors.darkGray} />
   );
 
+  const signIn = async () => {
+    setIsLoading(true);
+    try {
+      Alert.alert("Success", "Login successful");
+    } catch (error) {
+      Alert.alert("Error", (error as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ paddingHorizontal: 20 }}>
-        <View style={styles.logo}>
-          <LoginSVG
-            width={200}
-            height={200}
-            style={{ transform: [{ rotate: "-15deg" }] }}
-          />
-        </View>
-        <Text style={styles.loginText}>Login</Text>
-        <InputField
-          label={"Email Address"}
-          keyboardType={"email-address"}
-          icon={emailIcon}
+    <View style={styles.container}>
+      <View style={styles.logo}>
+        <LoginSVG
+          width={200}
+          height={200}
+          style={{ transform: [{ rotate: "-15deg" }] }}
         />
-        <InputField
-          label={"Password"}
-          icon={passwordIcon}
-          inputType="password"
-          fieldButtonLabel="Forgot?"
-          fieldButtonFunction={() => console.log("forgot")}
-        />
-        <ActionButton
-          label={"Login"}
-          onPress={() => console.log("login")}
-          touchableStyle={styles.loginBtn}
-          textStyle={styles.loginBtnText}
-        />
-        <Text style={styles.otherAuthSeparator}>Or, login with ...</Text>
-        <View style={styles.iconsContainer}>
-          <TouchableOpacity
-            style={styles.authIcon}
-            onPress={() => console.log("Google svg")}
-          >
-            <GoogleSVG width={30} height={30} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.authIcon}
-            onPress={() => console.log("FB svg")}
-          >
-            <FacebookSVG width={24} height={24} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.registerContainer}>
-          <Text>New to the app?</Text>
-          <ActionButton
-            label={"Register"}
-            onPress={() => navigation.navigate("Register")}
-            textStyle={styles.primaryText}
-          />
-        </View>
       </View>
-    </SafeAreaView>
+      <Text style={styles.loginText}>Login</Text>
+      <InputField
+        label={"Email Address"}
+        keyboardType={"email-address"}
+        icon={emailIcon}
+        inputValue={email}
+        inputChangeHandler={(text: string) => setEmail(text)}
+      />
+      <InputField
+        label={"Password"}
+        icon={passwordIcon}
+        inputType="password"
+        inputValue={password}
+        inputChangeHandler={(text: string) => setPassword(text)}
+        fieldButtonLabel="Forgot?"
+        fieldButtonClickHandler={() => setIsLoading(!isLoading)}
+      />
+      <ActionButton
+        label={"Login"}
+        isLoading={isLoading}
+        onPress={signIn}
+        touchableStyle={styles.loginBtn}
+        textStyle={styles.loginBtnText}
+      />
+      <Text style={styles.otherAuthSeparator}>Or, login with ...</Text>
+      <View style={styles.iconsContainer}>
+        <TouchableOpacity
+          style={styles.authIcon}
+          onPress={() => console.log("Google svg")}
+        >
+          <GoogleSVG width={30} height={30} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.authIcon}
+          onPress={() => console.log("FB svg")}
+        >
+          <FacebookSVG width={24} height={24} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.registerContainer}>
+        <Text>New to the app?</Text>
+        <ActionButton
+          label={"Register"}
+          onPress={() => navigation.navigate("Register")}
+          textStyle={styles.primaryText}
+        />
+      </View>
+    </View>
   );
 }
 
@@ -87,6 +97,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     justifyContent: "center",
+    backgroundColor: colors.white,
+    paddingTop: 60,
+    paddingHorizontal: 20,
   },
   logo: {
     alignItems: "center",

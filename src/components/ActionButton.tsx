@@ -10,7 +10,7 @@ export function ActionButton({
   onPress,
 }: {
   label: string;
-  isLoading: boolean;
+  isLoading?: boolean;
   touchableStyle?: any;
   textStyle?: any;
   onPress: () => void;

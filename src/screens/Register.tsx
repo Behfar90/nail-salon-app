@@ -97,6 +97,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     justifyContent: "center",
+    backgroundColor: colors.white,
+    paddingTop: 60,
+    paddingHorizontal: 20,
   },
   logo: {
     alignItems: "center",
