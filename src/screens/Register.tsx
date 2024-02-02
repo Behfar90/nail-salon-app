@@ -2,12 +2,20 @@ import { View, ScrollView, Text, StyleSheet, SafeAreaView } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "@utils";
-
+import { useSignUp } from "@clerk/clerk-expo";
 import RegistrationSVG from "@assets/svgs/registration.svg";
-import { ActionButton, RegisterForm, SocialAuthButtons } from "@components";
+import {
+  ActionButton,
+  RegisterForm,
+  SocialAuthButtons,
+  Verification,
+} from "@components";
 
 export function Register() {
   const navigation = useNavigation();
+  const { isLoaded, signUp, setActive } = useSignUp();
+
+  const [pendingVerification, setPendingVerification] = React.useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -24,17 +32,30 @@ export function Register() {
         <SocialAuthButtons />
 
         <Text style={styles.otherAuthSeparator}>Or, register with email</Text>
-
-        <RegisterForm />
-
-        <View style={styles.registerContainer}>
-          <Text>Already registered?</Text>
-          <ActionButton
-            label={"Login"}
-            onPress={() => navigation.goBack()}
-            textStyle={styles.primaryText}
+        {!pendingVerification && (
+          <>
+            <RegisterForm
+              PendinVerificationToggler={setPendingVerification}
+              isSignUpLoaded={isLoaded}
+              signUp={signUp}
+            />
+            <View style={styles.registerContainer}>
+              <Text>Already registered?</Text>
+              <ActionButton
+                label={"Login"}
+                onPress={() => navigation.goBack()}
+                textStyle={styles.primaryText}
+              />
+            </View>
+          </>
+        )}
+        {pendingVerification && (
+          <Verification
+            isSignUpLoaded={isLoaded}
+            signUp={signUp}
+            setActive={setActive}
           />
-        </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
