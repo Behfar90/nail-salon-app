@@ -1,29 +1,19 @@
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "@utils";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import LoginSVG from "@assets/svgs/login.svg";
-import GoogleSVG from "@assets/svgs/google.svg";
-import FacebookSVG from "@assets/svgs/facebook.svg";
-import { ActionButton, InputField } from "@components";
+import { ActionButton, InputField, SocialAuthButtons } from "@components";
 import { useSignIn } from "@clerk/clerk-expo";
-import { useWarmUpBrowser, useSocialOAuth } from "@hooks";
 
 export function Login() {
-  useWarmUpBrowser();
-
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { signIn, setActive, isLoaded } = useSignIn();
   const navigation = useNavigation();
-
-  const handleGoogleSignIn = useSocialOAuth({ oauthStrategy: "oauth_google" });
-  const handleFacebookSignIn = useSocialOAuth({
-    oauthStrategy: "oauth_facebook",
-  });
 
   const emailIcon = (
     <MaterialIcons name="alternate-email" size={20} color={colors.darkGray} />
@@ -63,6 +53,7 @@ export function Login() {
       <InputField
         label={"Email Address"}
         keyboardType={"email-address"}
+        autoCompleteType="email"
         icon={emailIcon}
         inputValue={email}
         inputChangeHandler={(text: string) => setEmail(text)}
@@ -72,6 +63,7 @@ export function Login() {
         icon={passwordIcon}
         inputType="password"
         inputValue={password}
+        autoCompleteType="password"
         inputChangeHandler={(text: string) => setPassword(text)}
         fieldButtonLabel="Forgot?"
         fieldButtonClickHandler={() => setIsLoading(!isLoading)}
@@ -84,17 +76,7 @@ export function Login() {
         textStyle={styles.loginBtnText}
       />
       <Text style={styles.otherAuthSeparator}>Or, login with ...</Text>
-      <View style={styles.iconsContainer}>
-        <TouchableOpacity style={styles.authIcon} onPress={handleGoogleSignIn}>
-          <GoogleSVG width={30} height={30} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.authIcon}
-          onPress={handleFacebookSignIn}
-        >
-          <FacebookSVG width={24} height={24} />
-        </TouchableOpacity>
-      </View>
+      <SocialAuthButtons />
       <View style={styles.registerContainer}>
         <Text>New to the app?</Text>
         <ActionButton
@@ -140,20 +122,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: colors.darkGray,
     marginVertical: 30,
-  },
-  iconsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 20,
-  },
-  authIcon: {
-    borderColor: colors.lightGray,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-    borderRadius: 10,
-    borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
   },
   primaryText: {
     color: colors.primary,

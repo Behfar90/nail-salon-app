@@ -15,6 +15,7 @@ export function InputField({
   inputValue,
   inputChangeHandler,
   keyboardType,
+  autoCompleteType,
   fieldButtonLabel,
   fieldButtonClickHandler,
 }: {
@@ -24,6 +25,7 @@ export function InputField({
   inputValue?: string;
   inputChangeHandler?: (arg0?: any) => void;
   keyboardType?: any;
+  autoCompleteType?: any;
   fieldButtonLabel?: string;
   fieldButtonClickHandler?: () => void;
 }) {
@@ -36,13 +38,17 @@ export function InputField({
           value={inputValue}
           onChangeText={inputChangeHandler}
           keyboardType={keyboardType}
+          autoComplete={autoCompleteType}
           style={styles.input}
           secureTextEntry={true}
+          autoCapitalize="none"
         />
       ) : (
         <TextInput
           placeholder={label}
           value={inputValue}
+          autoCapitalize="none"
+          autoComplete={autoCompleteType}
           onChangeText={inputChangeHandler}
           keyboardType={keyboardType}
           style={styles.input}
