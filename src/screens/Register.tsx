@@ -14,9 +14,16 @@ import RegistrationSVG from "@assets/svgs/registration.svg";
 import GoogleSVG from "@assets/svgs/google.svg";
 import FacebookSVG from "@assets/svgs/facebook.svg";
 import { ActionButton, InputField } from "@components";
+import { useWarmUpBrowser, useSocialOAuth } from "@hooks";
 
 export function Register() {
+  useWarmUpBrowser();
+
   const navigation = useNavigation();
+  const handleGoogleSignIn = useSocialOAuth({ oauthStrategy: "oauth_google" });
+  const handleFacebookSignIn = useSocialOAuth({
+    oauthStrategy: "oauth_facebook",
+  });
 
   const fullNameIcon = (
     <Ionicons name="person-outline" size={20} color={colors.darkGray} />
@@ -44,13 +51,13 @@ export function Register() {
         <View style={styles.iconsContainer}>
           <TouchableOpacity
             style={styles.authIcon}
-            onPress={() => console.log("Google svg")}
+            onPress={handleGoogleSignIn}
           >
             <GoogleSVG width={30} height={30} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.authIcon}
-            onPress={() => console.log("FB svg")}
+            onPress={handleFacebookSignIn}
           >
             <FacebookSVG width={24} height={24} />
           </TouchableOpacity>
@@ -98,8 +105,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: colors.white,
-    paddingTop: 60,
-    paddingHorizontal: 20,
   },
   logo: {
     alignItems: "center",

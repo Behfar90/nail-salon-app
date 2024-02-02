@@ -7,13 +7,24 @@ import LoginSVG from "@assets/svgs/login.svg";
 import GoogleSVG from "@assets/svgs/google.svg";
 import FacebookSVG from "@assets/svgs/facebook.svg";
 import { ActionButton, InputField } from "@components";
+import { useSignIn } from "@clerk/clerk-expo";
+import { useWarmUpBrowser, useSocialOAuth } from "@hooks";
 
 export function Login() {
+  useWarmUpBrowser();
+
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const { signIn, setActive, isLoaded } = useSignIn();
   const navigation = useNavigation();
+
+  const handleGoogleSignIn = useSocialOAuth({ oauthStrategy: "oauth_google" });
+  const handleFacebookSignIn = useSocialOAuth({
+    oauthStrategy: "oauth_facebook",
+  });
+
   const emailIcon = (
     <MaterialIcons name="alternate-email" size={20} color={colors.darkGray} />
   );
@@ -21,12 +32,19 @@ export function Login() {
     <Ionicons name="lock-closed-outline" size={20} color={colors.darkGray} />
   );
 
-  const signIn = async () => {
+  const signInWithEmailHandler = async () => {
     setIsLoading(true);
+    if (!isLoaded) {
+      return;
+    }
     try {
-      Alert.alert("Success", "Login successful");
-    } catch (error) {
-      Alert.alert("Error", (error as Error).message);
+      const completeSignIn = await signIn.create({
+        identifier: email,
+        password,
+      });
+      await setActive({ session: completeSignIn.createdSessionId });
+    } catch (error: any) {
+      Alert.alert(error.errors[0].message);
     } finally {
       setIsLoading(false);
     }
@@ -61,21 +79,18 @@ export function Login() {
       <ActionButton
         label={"Login"}
         isLoading={isLoading}
-        onPress={signIn}
+        onPress={signInWithEmailHandler}
         touchableStyle={styles.loginBtn}
         textStyle={styles.loginBtnText}
       />
       <Text style={styles.otherAuthSeparator}>Or, login with ...</Text>
       <View style={styles.iconsContainer}>
-        <TouchableOpacity
-          style={styles.authIcon}
-          onPress={() => console.log("Google svg")}
-        >
+        <TouchableOpacity style={styles.authIcon} onPress={handleGoogleSignIn}>
           <GoogleSVG width={30} height={30} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.authIcon}
-          onPress={() => console.log("FB svg")}
+          onPress={handleFacebookSignIn}
         >
           <FacebookSVG width={24} height={24} />
         </TouchableOpacity>
