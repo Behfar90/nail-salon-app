@@ -16,7 +16,8 @@
       "@navigations": ["src/navigations/index.ts"],
       "@screens": ["src/screens/index.ts"],
       "@components": ["src/components/index.ts"],
-      "@hooks": ["src/hooks/index.ts"]
+      "@hooks": ["src/hooks/index.ts"],
+      "@contexts": ["src/contexts/index.ts"]
     }
   },
   "extends": "expo/tsconfig.base"
