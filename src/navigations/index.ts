@@ -1,2 +1,4 @@
 export * from "./AuthStack";
-export * from "./TabNavigation";
+export * from "./MainNavigator";
+export * from "./AdminNavigation";
+export * from "./UserNavigation";

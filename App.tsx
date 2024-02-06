@@ -1,9 +1,10 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { AuthStack, TabNavigation } from "@navigations";
-import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
+import { AuthStack, MainNavigator } from "@navigations";
+import { ClerkProvider, SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { CLERK_PUBLISHABLE_KEY } from "@env";
 import { tokenCache } from "@utils";
+import { UserProvider } from "@contexts";
 
 export default function App() {
   return (
@@ -12,9 +13,11 @@ export default function App() {
       publishableKey={CLERK_PUBLISHABLE_KEY}
     >
       <SignedIn>
-        <NavigationContainer>
-          <TabNavigation />
-        </NavigationContainer>
+        <UserProvider>
+          <NavigationContainer>
+            <MainNavigator />
+          </NavigationContainer>
+        </UserProvider>
       </SignedIn>
       <SignedOut>
         <NavigationContainer>

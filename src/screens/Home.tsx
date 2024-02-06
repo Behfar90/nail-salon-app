@@ -1,13 +1,18 @@
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import React from "react";
-import { useUserContext } from "@contexts";
+import { useAuth } from "@clerk/clerk-expo";
 
 export function Home() {
-  const { userData } = useUserContext();
-  console.log(userData);
+  const { isLoaded, signOut } = useAuth();
+
+  if (!isLoaded) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
-    <View>
+    <View style={{ paddingTop: 60, paddingVertical: 20 }}>
       <Text>Home</Text>
+      <Button title="Sign Out" onPress={() => signOut()} />
     </View>
   );
 }
