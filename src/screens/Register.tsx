@@ -2,7 +2,7 @@ import { View, ScrollView, Text, StyleSheet, SafeAreaView } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "@utils";
-import { useSignUp } from "@clerk/clerk-expo";
+// import { useSignUp } from "@clerk/clerk-expo";
 import RegistrationSVG from "@assets/svgs/registration.svg";
 import {
   ActionButton,
@@ -13,9 +13,15 @@ import {
 
 export function Register() {
   const navigation = useNavigation();
-  const { isLoaded, signUp, setActive } = useSignUp();
+  // const { isLoaded, signUp, setActive } = useSignUp();
 
   const [pendingVerification, setPendingVerification] = React.useState(false);
+
+  const signUp = () => {
+    console.log("signUp");
+  };
+
+  const isLoaded = true;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,6 +48,7 @@ export function Register() {
             <View style={styles.registerContainer}>
               <Text>Already registered?</Text>
               <ActionButton
+                id={"login"}
                 label={"Login"}
                 onPress={() => navigation.goBack()}
                 textStyle={styles.primaryText}
@@ -49,13 +56,13 @@ export function Register() {
             </View>
           </>
         )}
-        {pendingVerification && (
+        {/* {pendingVerification && (
           <Verification
             isSignUpLoaded={isLoaded}
             signUp={signUp}
             setActive={setActive}
           />
-        )}
+        )} */}
       </ScrollView>
     </SafeAreaView>
   );

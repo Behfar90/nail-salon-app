@@ -3,12 +3,14 @@ import React from "react";
 import { colors } from "@utils";
 
 export function ActionButton({
+  id,
   label,
   isLoading = false,
   touchableStyle,
   textStyle,
   onPress,
 }: {
+  id?: string;
   label: string;
   isLoading?: boolean;
   touchableStyle?: any;
@@ -16,7 +18,7 @@ export function ActionButton({
   onPress: () => void;
 }) {
   return (
-    <TouchableOpacity style={touchableStyle} onPress={onPress}>
+    <TouchableOpacity id={id} style={touchableStyle} onPress={onPress}>
       {isLoading ? (
         <ActivityIndicator size="small" color={colors.white} />
       ) : (

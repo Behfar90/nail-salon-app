@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { useUser } from "@clerk/clerk-expo";
+// import { useUser } from "@clerk/clerk-expo";
 
 export interface UserDataType {
   id: string | null;
@@ -37,20 +37,20 @@ export const useUserContext = () => {
 
 export const UserProvider: React.FC = ({ children }) => {
   const [userData, setUserData] = React.useState<UserDataType | null>(null);
-  const { isSignedIn, user } = useUser();
+  // const { isSignedIn, user } = useUser();
 
   React.useEffect(() => {
-    if (isSignedIn) {
-      setUserData({
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.primaryEmailAddress?.emailAddress ?? null,
-        role: user.publicMetadata?.role ?? "user",
-        imageUrl: user.imageUrl,
-      });
-    }
-  }, [isSignedIn, user]);
+    // if (isSignedIn) {
+    // setUserData({
+    //   id: user.id,
+    //   firstName: user.firstName,
+    //   lastName: user.lastName,
+    //   email: user.primaryEmailAddress?.emailAddress ?? null,
+    //   role: user.publicMetadata?.role ?? "user",
+    //   imageUrl: user.imageUrl,
+    // });
+    // }
+  }, []);
 
   const contextValue: UserContextPropsType = React.useMemo(
     () => ({ userData: userData, setUserData: setUserData }),

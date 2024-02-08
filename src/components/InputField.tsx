@@ -11,20 +11,28 @@ import {
 export function InputField({
   label,
   icon,
+  autoFocus = false,
   inputType,
   inputValue,
   inputChangeHandler,
-  keyboardType,
+  keyboardType = "default",
   autoCompleteType,
   fieldButtonLabel,
   fieldButtonClickHandler,
 }: {
   label: string;
   icon: React.ReactNode;
+  autoFocus?: boolean;
   inputType?: string;
   inputValue?: string;
   inputChangeHandler?: (arg0?: any) => void;
-  keyboardType?: any;
+  keyboardType?:
+    | "default"
+    | "number-pad"
+    | "decimal-pad"
+    | "numeric"
+    | "email-address"
+    | "phone-pad";
   autoCompleteType?: any;
   fieldButtonLabel?: string;
   fieldButtonClickHandler?: () => void;
@@ -36,6 +44,7 @@ export function InputField({
         <TextInput
           placeholder={label}
           value={inputValue}
+          autoFocus={autoFocus}
           onChangeText={inputChangeHandler}
           keyboardType={keyboardType}
           autoComplete={autoCompleteType}
@@ -46,6 +55,7 @@ export function InputField({
       ) : (
         <TextInput
           placeholder={label}
+          autoFocus={autoFocus}
           value={inputValue}
           autoCapitalize="none"
           autoComplete={autoCompleteType}
@@ -68,7 +78,6 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.lightGray,
     borderBottomWidth: 1,
     paddingBottom: 8,
-    marginBottom: 25,
     gap: 10,
   },
   input: {
