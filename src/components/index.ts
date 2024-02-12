@@ -1,3 +1,3 @@
 export * from "./ActionButton";
 export * from "./InputField";
-export * from "./Stepper";
+export * from "./start/SignupSteps";

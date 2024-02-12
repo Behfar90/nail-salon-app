@@ -17,7 +17,9 @@
       "@screens": ["src/screens/index.ts"],
       "@components": ["src/components/index.ts"],
       "@hooks": ["src/hooks/index.ts"],
-      "@contexts": ["src/contexts/index.ts"]
+      "@contexts": ["src/contexts/index.ts"],
+      "@firebase/config": ["firebase.config.js"],
+      "@firebase/helpers": ["src/firebase/index.ts"]
     }
   },
   "extends": "expo/tsconfig.base"

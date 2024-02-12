@@ -6,7 +6,22 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
+  Platform,
+  KeyboardTypeOptions,
 } from "react-native";
+
+interface InputFieldProps {
+  label: string;
+  icon: React.ReactNode;
+  autoFocus?: boolean;
+  inputType?: string;
+  inputValue?: string;
+  inputChangeHandler?: (arg0?: any) => void;
+  keyboardType?: KeyboardTypeOptions;
+  autoCompleteType?: any;
+  fieldButtonLabel?: string;
+  fieldButtonClickHandler?: () => void;
+}
 
 export function InputField({
   label,
@@ -19,26 +34,12 @@ export function InputField({
   autoCompleteType,
   fieldButtonLabel,
   fieldButtonClickHandler,
-}: {
-  label: string;
-  icon: React.ReactNode;
-  autoFocus?: boolean;
-  inputType?: string;
-  inputValue?: string;
-  inputChangeHandler?: (arg0?: any) => void;
-  keyboardType?:
-    | "default"
-    | "number-pad"
-    | "decimal-pad"
-    | "numeric"
-    | "email-address"
-    | "phone-pad";
-  autoCompleteType?: any;
-  fieldButtonLabel?: string;
-  fieldButtonClickHandler?: () => void;
-}) {
+}: InputFieldProps) {
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       {icon}
       {inputType === "password" ? (
         <TextInput
@@ -73,6 +74,7 @@ export function InputField({
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     borderBottomColor: colors.lightGray,
