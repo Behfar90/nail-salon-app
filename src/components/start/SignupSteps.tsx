@@ -1,34 +1,25 @@
 import { Alert, Animated, Dimensions, StyleSheet } from "react-native";
-import React, { Dispatch, SetStateAction } from "react";
-import { ActionButton, InputField } from "@components";
+import React from "react";
+import { ActionButton, InputField } from "../index";
 import { Stepper } from "./Stepper";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { FIREBASE_APP } from "@firebase/config";
 import { colors, icons, strings } from "@utils";
-import { sendVerification, confirmCode } from "@firebase/helpers";
+import firebase from "@firebase/helpers";
 
-export function SignupSteps({
-  numberOfSteps,
-  name,
-  setName,
-  phoneNumber,
-  setPhoneNumber,
-  verificationCode,
-  setVerificationCode,
-  verificationId,
-  setVerificationId,
-}: {
+// make an interface for props
+interface SignupStepsProps {
   numberOfSteps: number;
-  name: string;
-  setName: Dispatch<SetStateAction<string>>;
-  phoneNumber: string;
-  setPhoneNumber: Dispatch<SetStateAction<string>>;
-  verificationCode: string;
-  setVerificationCode: Dispatch<SetStateAction<string>>;
-  verificationId: string | undefined;
-  setVerificationId: Dispatch<SetStateAction<string | undefined>>;
-}) {
+}
+
+export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
   const [step, setStep] = React.useState<number>(1);
+  const [name, setName] = React.useState<string>("");
+  const [phoneNumber, setPhoneNumber] = React.useState<string>("");
+  const [verificationCode, setVerificationCode] = React.useState<string>("");
+  const [verificationId, setVerificationId] = React.useState<
+    string | undefined
+  >();
 
   const recaptchaVerifier = React.useRef(null);
 
@@ -102,7 +93,10 @@ export function SignupSteps({
         Alert.alert(strings.alert.phone_country_code);
         return;
       }
-      const verId = await sendVerification(phoneNumber, recaptchaVerifier);
+      const verId = await firebase.sendVerification(
+        phoneNumber,
+        recaptchaVerifier
+      );
       setVerificationId(verId);
     }
     if (step === 4) {
@@ -110,11 +104,14 @@ export function SignupSteps({
         Alert.alert(strings.alert.verification_code_required);
         return;
       }
-      const user = await confirmCode(
+      const user = await firebase.confirmCode(
         verificationId as string,
         verificationCode
       );
-      console.log("Now the result --->", JSON.stringify(user, null, 2));
+      if (user) {
+        const { uid, displayName, phoneNumber } = user.user;
+        await firebase.addUserToCloud(uid, displayName, phoneNumber);
+      }
     }
     setStep((prev) => prev + 1);
   };

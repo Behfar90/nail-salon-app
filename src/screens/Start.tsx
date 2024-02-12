@@ -12,13 +12,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { SignupSteps } from "@components";
 
 export function Start() {
-  const [name, setName] = React.useState<string>("");
-  const [phoneNumber, setPhoneNumber] = React.useState<string>("");
-  const [verificationCode, setVerificationCode] = React.useState<string>("");
-  const [verificationId, setVerificationId] = React.useState<
-    string | undefined
-  >();
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAwareScrollView
@@ -35,17 +28,7 @@ export function Start() {
         <Text style={styles.mainHeader}>{strings.start.mainHeader}</Text>
         <Text style={styles.subHeader1}>{strings.start.subHeader}</Text>
         <Text style={styles.subHeader2}>{strings.start.subHeader2}</Text>
-        <SignupSteps
-          numberOfSteps={5}
-          name={name}
-          setName={setName}
-          phoneNumber={phoneNumber}
-          setPhoneNumber={setPhoneNumber}
-          verificationCode={verificationCode}
-          setVerificationCode={setVerificationCode}
-          verificationId={verificationId}
-          setVerificationId={setVerificationId}
-        />
+        <SignupSteps numberOfSteps={5} />
       </KeyboardAwareScrollView>
     </TouchableWithoutFeedback>
   );
