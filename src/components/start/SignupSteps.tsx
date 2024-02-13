@@ -72,48 +72,85 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
     outputRange: ["0", "2"],
   });
 
+  const validateName = () => {
+    if (name === "") {
+      Alert.alert(strings.alert.name_required);
+      return false;
+    }
+    return true;
+  };
+
+  const validatePhoneNumber = () => {
+    if (phoneNumber === "") {
+      Alert.alert(strings.alert.phone_required);
+      return false;
+    }
+    if (RegExp(/^\+\d+/).exec(phoneNumber) === null) {
+      Alert.alert(strings.alert.phone_country_code);
+      return false;
+    }
+    return true;
+  };
+
+  const validateVerificationCode = () => {
+    if (verificationCode === "") {
+      Alert.alert(strings.alert.verification_code_required);
+      return false;
+    }
+    return true;
+  };
+
+  const sendVerificationCode = async () => {
+    const verId = await firebase.sendVerification(
+      phoneNumber,
+      recaptchaVerifier
+    );
+    setVerificationId(verId);
+  };
+
+  const handleConfirmation = async () => {
+    const user = await firebase.confirmCode(
+      verificationId as string,
+      verificationCode
+    );
+    await firebase.updateUserProfile(user.user, name);
+    if (user) {
+      const { uid, displayName, phoneNumber } = user.user;
+      await firebase.addUserToCloud(uid, displayName ?? name, phoneNumber);
+    }
+  };
+
   /**
-   *  Handler for the stepper button
-   * @returns void
+   *  Function to handle the stepper button press
+   * @returns Promise<void>
    */
   const stepperButtonHandler: () => Promise<void> = async () => {
     if (step > numberOfSteps) {
       return;
     }
-    if (step === 2 && name === "") {
-      Alert.alert(strings.alert.name_required);
-      return;
+
+    switch (step) {
+      case 2:
+        if (!validateName()) {
+          return;
+        }
+        break;
+      case 3:
+        if (!validatePhoneNumber()) {
+          return;
+        }
+        await sendVerificationCode();
+        break;
+      case 4:
+        if (!validateVerificationCode()) {
+          return;
+        }
+        await handleConfirmation();
+        break;
+      default:
+        break;
     }
-    if (step === 3) {
-      if (phoneNumber === "") {
-        Alert.alert(strings.alert.phone_required);
-        return;
-      }
-      if (RegExp(/^\+\d+/).exec(phoneNumber) === null) {
-        Alert.alert(strings.alert.phone_country_code);
-        return;
-      }
-      const verId = await firebase.sendVerification(
-        phoneNumber,
-        recaptchaVerifier
-      );
-      setVerificationId(verId);
-    }
-    if (step === 4) {
-      if (verificationCode === "") {
-        Alert.alert(strings.alert.verification_code_required);
-        return;
-      }
-      const user = await firebase.confirmCode(
-        verificationId as string,
-        verificationCode
-      );
-      await firebase.updateUserProfile(user.user, name);
-      if (user) {
-        const { uid, displayName, phoneNumber } = user.user;
-        await firebase.addUserToCloud(uid, displayName ?? name, phoneNumber);
-      }
-    }
+
     setStep((prev) => prev + 1);
   };
 
