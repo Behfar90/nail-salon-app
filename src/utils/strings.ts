@@ -3,7 +3,8 @@ export const strings: { [key: string]: any } = {
     mainHeader: "Your Ultimate Nail Care Destination!",
     subHeader:
       "Seamless Booking, Personalized Experience, Exclusive Offers, Track and Manage",
-    subHeader2: "Ready to embark on a journey of exquisite nail pampering?",
+    subHeader2: "Embark on a journey of exquisite nail pampering with us!",
+    login: "Already have an account?",
     stepper_btn_step_1: "Get ready to elevate your nail game",
     stepper_btn_step_2: "Enter Name",
     stepper_btn_step_3: "Add Phone Number",

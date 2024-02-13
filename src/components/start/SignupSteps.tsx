@@ -108,9 +108,10 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
         verificationId as string,
         verificationCode
       );
+      await firebase.updateUserProfile(user.user, name);
       if (user) {
         const { uid, displayName, phoneNumber } = user.user;
-        await firebase.addUserToCloud(uid, displayName, phoneNumber);
+        await firebase.addUserToCloud(uid, displayName ?? name, phoneNumber);
       }
     }
     setStep((prev) => prev + 1);
