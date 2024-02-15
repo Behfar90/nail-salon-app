@@ -268,9 +268,10 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: colors.primary,
-    paddingVertical: 15,
+    height: 55,
     width: Dimensions.get("screen").width * 0.8,
     borderRadius: 10,
+    justifyContent: "center",
     alignItems: "center",
   },
   btnText: {

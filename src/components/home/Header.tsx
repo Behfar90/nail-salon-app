@@ -9,9 +9,7 @@ export function Header() {
     <SafeAreaView style={{ marginTop: 20 }}>
       <View style={styles.container}>
         <View>
-          <Text style={{ fontSize: 20 }}>
-            Hello {userData.name ?? "placeholder"} 👋
-          </Text>
+          <Text style={{ fontSize: 20 }}>Hello {userData.name} 👋</Text>
         </View>
         {icons.NotificationIcon({ size: 26, color: colors.darkGray })}
       </View>
