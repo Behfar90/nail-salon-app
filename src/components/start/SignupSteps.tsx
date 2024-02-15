@@ -6,6 +6,7 @@ import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { FIREBASE_APP } from "@firebase/config";
 import { colors, icons, strings } from "@utils";
 import firebase from "@firebase/helpers";
+import { useUserContext } from "@contexts";
 
 // make an interface for props
 interface SignupStepsProps {
@@ -22,6 +23,8 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
   >();
 
   const recaptchaVerifier = React.useRef(null);
+
+  const { userData, updateUserData } = useUserContext();
 
   /**
    * Animated borderWidth for the stepper container
@@ -101,23 +104,39 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
   };
 
   const sendVerificationCode = async () => {
+    updateUserData({
+      isLoading: true,
+    });
     const verId = await firebase.sendVerification(
       phoneNumber,
       recaptchaVerifier
     );
     setVerificationId(verId);
+    updateUserData({
+      isLoading: false,
+    });
   };
 
   const handleConfirmation = async () => {
-    const user = await firebase.confirmCode(
-      verificationId as string,
-      verificationCode
-    );
-    await firebase.updateUserProfile(user.user, name);
-    if (user) {
-      const { uid, displayName, phoneNumber } = user.user;
-      await firebase.addUserToCloud(uid, displayName ?? name, phoneNumber);
-    }
+    updateUserData({
+      isLoading: true,
+    });
+    firebase
+      .confirmCode(verificationId as string, verificationCode)
+      .then((user) => {
+        if (user) {
+          const { uid, phoneNumber } = user.user;
+          firebase.addUserToCloud(uid, name, phoneNumber);
+        }
+      })
+      .catch((error) => {
+        console.error("Error confirming code:", error);
+      })
+      .finally(() => {
+        updateUserData({
+          isLoading: false,
+        });
+      });
   };
 
   /**
@@ -222,6 +241,7 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
             `stepper_btn_step_${step}` as keyof typeof strings.start
           ]
         }
+        isLoading={userData?.isLoading}
         onPress={stepperButtonHandler}
         textStyle={styles.btnText}
         touchableStyle={styles.button}

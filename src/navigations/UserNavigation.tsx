@@ -1,6 +1,5 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 import { Appointments, Home, Profile } from "@screens";
 import { colors, icons } from "@utils";
 

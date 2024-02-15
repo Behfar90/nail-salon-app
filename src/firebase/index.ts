@@ -1,9 +1,5 @@
 import { FIREBASE_AUTH, FIREBASE_DB } from "@firebase/config";
-import {
-  PhoneAuthProvider,
-  signInWithCredential,
-  updateProfile,
-} from "firebase/auth";
+import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const sendVerification = async (
@@ -58,16 +54,19 @@ const addUserToCloud = async (
   }
 };
 
-const updateUserProfile = async (
-  user: any,
-  displayName: string
-): Promise<void> => {
+const getUserDataFromDB = async (uid: string): Promise<any> => {
+  if (!uid) return Promise.resolve(null);
+  const userRef = doc(FIREBASE_DB, "users", uid);
   try {
-    await updateProfile(user, {
-      displayName,
-    });
-  } catch (error) {
-    console.error("Error updating user profile:", error);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      return userDoc.data();
+    } else {
+      return Promise.resolve(null);
+    }
+  } catch {
+    console.error("Error getting user data from the db");
   }
 };
 
@@ -75,5 +74,5 @@ export default {
   sendVerification,
   confirmCode,
   addUserToCloud,
-  updateUserProfile,
+  getUserDataFromDB,
 };

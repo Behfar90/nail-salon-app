@@ -26,10 +26,16 @@ const VerifyIcon: React.FC<{ size: number; color: string }> = ({
   color,
 }) => <MaterialIcons name="verified-user" size={size} color={color} />;
 
+const NotificationIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <MaterialIcons name="notifications" size={size} color={color} />;
+
 export const icons = {
   HomeIcon,
   CalendarIcon,
   PersonIcon,
   PhoneIcon,
   VerifyIcon,
+  NotificationIcon,
 };

@@ -6,7 +6,7 @@ import {
   Keyboard,
 } from "react-native";
 import React from "react";
-import { colors, strings } from "@utils";
+import { strings, sharedStyles } from "@utils";
 import LoginSVG from "@assets/svgs/login.svg";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SignupSteps } from "@components";
@@ -15,7 +15,7 @@ export function Start() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAwareScrollView
-        style={styles.container}
+        style={sharedStyles.wrapper}
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
@@ -38,15 +38,6 @@ export function Start() {
  * Styles for Start component
  */
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    position: "relative",
-    flex: 1,
-    // alignItems: "center",
-    backgroundColor: colors.white,
-    paddingTop: 60,
-    paddingHorizontal: 20,
-  },
   mainHeader: {
     fontSize: 30,
     fontWeight: "bold",
