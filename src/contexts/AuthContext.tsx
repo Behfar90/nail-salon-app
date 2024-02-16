@@ -6,6 +6,8 @@ export interface SignedUserDataType {
   uid: string | null;
   phoneNumber?: string | null;
   isLoading: boolean;
+  createdAt?: Date;
+  lastloginAt?: Date;
 }
 
 export interface AuthContextPropsType {
@@ -39,10 +41,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
+      console.log("user", JSON.stringify(user, null, 2));
       setAuthData({
         uid: user?.uid ?? null,
         phoneNumber: user?.phoneNumber ?? null,
         isLoading: false,
+        createdAt: new Date(Number(user?.createdAt)),
+        lastloginAt: new Date(Number(user?.lastloginAt)),
       });
     });
     return unsubscribe;
