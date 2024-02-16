@@ -2,23 +2,23 @@ import React from "react";
 import { AuthStack, UserNavigation } from "@navigations";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogBox } from "react-native";
-import { UserProvider, useUserContext } from "@contexts";
+import { AuthProvider, useAuthContext } from "@contexts";
 
 LogBox.ignoreAllLogs();
 
 export default function App() {
   return (
-    <UserProvider>
+    <AuthProvider>
       <NavigationContainer>
         <Routes />
       </NavigationContainer>
-    </UserProvider>
+    </AuthProvider>
   );
 }
 
 const Routes = () => {
-  const { userData } = useUserContext();
+  const { authData } = useAuthContext();
 
   /* If user is logged in, show the user navigation, else show the auth stack */
-  return userData?.id ? <UserNavigation /> : <AuthStack />;
+  return authData?.uid ? <UserNavigation /> : <AuthStack />;
 };

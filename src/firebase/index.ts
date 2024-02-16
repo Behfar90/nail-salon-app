@@ -1,6 +1,14 @@
 import { FIREBASE_AUTH, FIREBASE_DB } from "@firebase/config";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  query,
+  collection,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
 
 const sendVerification = async (
   phoneNumber: string,
@@ -42,7 +50,7 @@ const addUserToCloud = async (
     const userDoc = await getDoc(userRef);
     if (!userDoc.exists()) {
       // User does not exist, add to the database
-      await setDoc(userRef, {
+      const res = await setDoc(userRef, {
         id: uid,
         name: displayName,
         phone: phoneNumber,
@@ -55,7 +63,6 @@ const addUserToCloud = async (
 };
 
 const getUserDataFromDB = async (uid: string): Promise<any> => {
-  if (!uid) return Promise.resolve(null);
   const userRef = doc(FIREBASE_DB, "users", uid);
   try {
     const userDoc = await getDoc(userRef);

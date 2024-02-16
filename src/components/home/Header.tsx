@@ -1,15 +1,19 @@
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import React from "react";
-import { useUserContext } from "@contexts";
+import { useAuthContext } from "@contexts";
 import { colors, icons } from "@utils";
 
 export function Header() {
-  const { userData } = useUserContext();
+  const { authData } = useAuthContext();
   return (
     <SafeAreaView style={{ marginTop: 20 }}>
       <View style={styles.container}>
         <View>
-          <Text style={{ fontSize: 20 }}>Hello {userData.name} 👋</Text>
+          <Text style={{ fontSize: 22 }}>
+            Hello,{" "}
+            <Text style={{ fontWeight: "bold" }}>{authData.phoneNumber}</Text>{" "}
+            👋
+          </Text>
         </View>
         {icons.NotificationIcon({ size: 26, color: colors.darkGray })}
       </View>

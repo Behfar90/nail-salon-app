@@ -6,7 +6,7 @@ import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { FIREBASE_APP } from "@firebase/config";
 import { colors, icons, strings } from "@utils";
 import firebase from "@firebase/helpers";
-import { useUserContext } from "@contexts";
+import { useAuthContext } from "@contexts";
 
 // make an interface for props
 interface SignupStepsProps {
@@ -24,7 +24,7 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
 
   const recaptchaVerifier = React.useRef(null);
 
-  const { userData, updateUserData } = useUserContext();
+  const { authData, updateAuthData } = useAuthContext();
 
   /**
    * Animated borderWidth for the stepper container
@@ -104,7 +104,7 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
   };
 
   const sendVerificationCode = async () => {
-    updateUserData({
+    updateAuthData({
       isLoading: true,
     });
     const verId = await firebase.sendVerification(
@@ -112,13 +112,13 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
       recaptchaVerifier
     );
     setVerificationId(verId);
-    updateUserData({
+    updateAuthData({
       isLoading: false,
     });
   };
 
   const handleConfirmation = async () => {
-    updateUserData({
+    updateAuthData({
       isLoading: true,
     });
     firebase
@@ -133,7 +133,7 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
         console.error("Error confirming code:", error);
       })
       .finally(() => {
-        updateUserData({
+        updateAuthData({
           isLoading: false,
         });
       });
@@ -241,7 +241,7 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
             `stepper_btn_step_${step}` as keyof typeof strings.start
           ]
         }
-        isLoading={userData?.isLoading}
+        isLoading={authData?.isLoading}
         onPress={stepperButtonHandler}
         textStyle={styles.btnText}
         touchableStyle={styles.button}
