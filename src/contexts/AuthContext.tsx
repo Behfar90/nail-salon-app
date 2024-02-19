@@ -41,7 +41,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
-      console.log("user", JSON.stringify(user, null, 2));
       setAuthData({
         uid: user?.uid ?? null,
         phoneNumber: user?.phoneNumber ?? null,
