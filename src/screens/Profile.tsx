@@ -7,7 +7,7 @@ export function Profile() {
   const { authData } = useAuthContext();
   const { userData } = useUserContext();
 
-  if (authData.isAuthenticationLoading || userData.isUserLoading) {
+  if (userData.isUserLoading) {
     return (
       <View style={styles.container}>
         <Text>Loading...</Text>

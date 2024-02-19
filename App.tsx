@@ -20,7 +20,7 @@ const Routes = () => {
   const { authData } = useAuthContext();
 
   /* If user is logged in, show the user navigation, else show the auth stack */
-  return authData?.uid ? (
+  return authData?.uid && !authData.isAuthenticationLoading ? (
     <UserProvider>
       <UserNavigation />
     </UserProvider>

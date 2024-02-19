@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "@firebase/config";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useLoadingTime } from "@hooks";
 
 export interface AuthenticationDataType {
   uid: string | null;
@@ -43,42 +43,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [authData, setAuthData] = React.useState<AuthenticationDataType>(
     initialState as AuthenticationDataType
   );
+  const { startTracking, stopTracking, getActualLoadingTime } =
+    useLoadingTime();
 
   React.useEffect(() => {
-    const checkAuthentication = async () => {
-      try {
-        const storageAuthData = await AsyncStorage.getItem("storageAuthData");
-        if (storageAuthData) {
-          const user = JSON.parse(storageAuthData);
-          setAuthData({
-            uid: user?.uid ?? null,
-            phoneNumber: user?.phoneNumber ?? null,
-            isAuthenticationLoading: false,
-            createdAt: new Date(Number(user?.createdAt)),
-            lastloginAt: new Date(Number(user?.lastloginAt)),
-          });
-        }
-      } catch (error) {
-        console.error("Error checking authentication:", error);
-      }
-    };
-
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
+      startTracking();
+
       if (user) {
-        AsyncStorage.getItem("storageAuthData").then((storageAuthData) => {
-          if (!storageAuthData) {
-            AsyncStorage.setItem("storageAuthData", JSON.stringify(user));
-          }
-        });
         setAuthData({
+          ...authData,
           uid: user?.uid ?? null,
           phoneNumber: user?.phoneNumber ?? null,
-          isAuthenticationLoading: false,
           createdAt: new Date(Number(user?.createdAt)),
           lastloginAt: new Date(Number(user?.lastloginAt)),
         });
+
+        const actualLoadingTime = getActualLoadingTime();
+
+        if (actualLoadingTime < 1000) {
+          setTimeout(() => {
+            setAuthData((prevAuthData) => ({
+              ...prevAuthData,
+              isAuthenticationLoading: false,
+            }));
+          }, 1000 - actualLoadingTime);
+        }
       } else {
-        AsyncStorage.removeItem("storageAuthData");
         setAuthData({
           uid: null,
           phoneNumber: null,
@@ -90,11 +81,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     });
 
     // Check authentication when the app starts
-    checkAuthentication();
+    // checkAuthentication();
 
     return () => {
       // Unsubscribe from the auth state changes
       unsubscribe();
+      stopTracking();
     };
   }, []);
 

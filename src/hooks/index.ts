@@ -1,1 +1,1 @@
-export * from "./useUpdateFromDB";
+export * from "./useLoadingTime";
