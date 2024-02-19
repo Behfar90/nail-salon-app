@@ -1,14 +1,7 @@
 import { FIREBASE_AUTH, FIREBASE_DB } from "@firebase/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
-import {
-  doc,
-  getDoc,
-  setDoc,
-  query,
-  collection,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const sendVerification = async (
   phoneNumber: string,
