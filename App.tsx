@@ -2,7 +2,7 @@ import React from "react";
 import { AuthStack, UserNavigation } from "@navigations";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogBox } from "react-native";
-import { AuthProvider, useAuthContext } from "@contexts";
+import { AuthProvider, UserProvider, useAuthContext } from "@contexts";
 
 LogBox.ignoreAllLogs();
 
@@ -20,5 +20,11 @@ const Routes = () => {
   const { authData } = useAuthContext();
 
   /* If user is logged in, show the user navigation, else show the auth stack */
-  return authData?.uid ? <UserNavigation /> : <AuthStack />;
+  return authData?.uid ? (
+    <UserProvider>
+      <UserNavigation />
+    </UserProvider>
+  ) : (
+    <AuthStack />
+  );
 };

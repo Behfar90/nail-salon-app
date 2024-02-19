@@ -3,23 +3,23 @@ import { onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "@firebase/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export interface SignedUserDataType {
+export interface AuthenticationDataType {
   uid: string | null;
   phoneNumber?: string | null;
-  isLoading: boolean;
+  isAuthenticationLoading: boolean;
   createdAt?: Date | null;
   lastloginAt?: Date | null;
 }
 
 export interface AuthContextPropsType {
-  authData: SignedUserDataType;
-  updateAuthData: (payload: Partial<SignedUserDataType>) => void;
+  authData: AuthenticationDataType;
+  updateAuthData: (payload: Partial<AuthenticationDataType>) => void;
 }
 
-const initialState: SignedUserDataType = {
+const initialState: AuthenticationDataType = {
   uid: null,
   phoneNumber: null,
-  isLoading: true,
+  isAuthenticationLoading: true,
   createdAt: null,
   lastloginAt: null,
 };
@@ -40,18 +40,20 @@ export const useAuthContext = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [authData, setAuthData] = React.useState<SignedUserDataType>(null);
+  const [authData, setAuthData] = React.useState<AuthenticationDataType>(
+    initialState as AuthenticationDataType
+  );
 
   React.useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const userData = await AsyncStorage.getItem("userData");
-        if (userData) {
-          const user = JSON.parse(userData);
+        const storageAuthData = await AsyncStorage.getItem("storageAuthData");
+        if (storageAuthData) {
+          const user = JSON.parse(storageAuthData);
           setAuthData({
             uid: user?.uid ?? null,
             phoneNumber: user?.phoneNumber ?? null,
-            isLoading: false,
+            isAuthenticationLoading: false,
             createdAt: new Date(Number(user?.createdAt)),
             lastloginAt: new Date(Number(user?.lastloginAt)),
           });
@@ -63,24 +65,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
       if (user) {
-        AsyncStorage.getItem("userData").then((userData) => {
-          if (!userData) {
-            AsyncStorage.setItem("userData", JSON.stringify(user));
+        AsyncStorage.getItem("storageAuthData").then((storageAuthData) => {
+          if (!storageAuthData) {
+            AsyncStorage.setItem("storageAuthData", JSON.stringify(user));
           }
         });
         setAuthData({
           uid: user?.uid ?? null,
           phoneNumber: user?.phoneNumber ?? null,
-          isLoading: false,
+          isAuthenticationLoading: false,
           createdAt: new Date(Number(user?.createdAt)),
           lastloginAt: new Date(Number(user?.lastloginAt)),
         });
       } else {
-        AsyncStorage.removeItem("userData");
+        AsyncStorage.removeItem("storageAuthData");
         setAuthData({
           uid: null,
           phoneNumber: null,
-          isLoading: false,
+          isAuthenticationLoading: false,
           createdAt: null,
           lastloginAt: null,
         });
@@ -99,7 +101,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const contextValue: AuthContextPropsType = React.useMemo(
     () => ({
       authData: authData,
-      updateAuthData: (payload: Partial<SignedUserDataType>) => {
+      updateAuthData: (payload: Partial<AuthenticationDataType>) => {
         setAuthData((prevAuthData) => ({
           ...prevAuthData,
           ...payload,
