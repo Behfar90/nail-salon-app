@@ -55,12 +55,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           ...authData,
           uid: user?.uid ?? null,
           phoneNumber: user?.phoneNumber ?? null,
-          createdAt: new Date(Number(user?.createdAt)),
-          lastloginAt: new Date(Number(user?.lastloginAt)),
+          createdAt: new Date(Number(user.metadata.createdAt)),
+          lastloginAt: new Date(Number(user.metadata.lastloginAt)),
         });
 
         const actualLoadingTime = getActualLoadingTime();
 
+        // To make sure the loading spinner is shown for at least 1 second
         if (actualLoadingTime < 1000) {
           setTimeout(() => {
             setAuthData((prevAuthData) => ({
@@ -79,9 +80,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         });
       }
     });
-
-    // Check authentication when the app starts
-    // checkAuthentication();
 
     return () => {
       // Unsubscribe from the auth state changes
