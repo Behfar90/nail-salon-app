@@ -1,6 +1,7 @@
 import { useAuthContext, useUserContext } from "@contexts";
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
+import firebase from "@firebase/helpers";
 
 export function Profile() {
   const { authData } = useAuthContext();
@@ -24,7 +25,7 @@ export function Profile() {
         <Text>Member since: {authData.createdAt?.toDateString()}</Text>
       </View>
       <View style={styles.signOutButton}>
-        <Button title="Sign Out" onPress={() => console.log("signout")} />
+        <Button title="Sign Out" onPress={() => firebase.signUserOut()} />
       </View>
     </View>
   );

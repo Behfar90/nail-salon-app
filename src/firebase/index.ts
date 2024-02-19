@@ -1,5 +1,4 @@
 import { FIREBASE_AUTH, FIREBASE_DB } from "@firebase/config";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -55,6 +54,14 @@ const addUserToCloud = async (
   }
 };
 
+const signUserOut = async () => {
+  try {
+    await FIREBASE_AUTH.signOut();
+  } catch (error) {
+    console.error("Error signing out:", error);
+  }
+};
+
 const getUserDataFromDB = async (uid: string): Promise<any> => {
   const userRef = doc(FIREBASE_DB, "users", uid);
   try {
@@ -74,5 +81,6 @@ export default {
   sendVerification,
   confirmCode,
   addUserToCloud,
+  signUserOut,
   getUserDataFromDB,
 };
