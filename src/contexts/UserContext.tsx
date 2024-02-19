@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import firebase from "@firebase/helpers";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useAuthContext } from "./AuthContext";
 
 export interface SignedUserDataType {
   uid: string | null;
@@ -35,9 +43,28 @@ export const useUserContext = () => {
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { authData } = useAuthContext();
   const [userData, setUserData] = useState<SignedUserDataType>(
     initialState as SignedUserDataType
   );
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const userDataFromDB = await firebase.getUserDataFromDB(authData.uid);
+        setUserData({
+          uid: userDataFromDB?.uid ?? null,
+          name: userDataFromDB?.name ?? null,
+          role: userDataFromDB?.isAdmin ? "admin" : "user",
+          isUserLoading: false,
+        });
+      } catch (error) {
+        // Handle error (e.g., log it or set an error state)
+        console.error("Error fetching user data:", error);
+      }
+    };
+    getUserData();
+  }, []);
 
   const contextValue: UserContextPropsType = useMemo(
     () => ({
