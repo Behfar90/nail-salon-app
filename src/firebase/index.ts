@@ -1,6 +1,11 @@
-import { FIREBASE_AUTH, FIREBASE_DB } from "@firebase/config";
+import { FIREBASE_AUTH, FIREBASE_DB, FIREBASE_STORAGE } from "@firebase/config";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
+
+// --------------------------
+// Firebase Auth Functions
+// --------------------------
 
 const sendVerification = async (
   phoneNumber: string,
@@ -32,6 +37,18 @@ const confirmCode = async (
   }
 };
 
+const signUserOut = async () => {
+  try {
+    await FIREBASE_AUTH.signOut();
+  } catch (error) {
+    console.error("Error signing out:", error);
+  }
+};
+
+// --------------------------
+// Firebase Cloud Functions
+// --------------------------
+
 const addUserToCloud = async (
   uid: string,
   displayName: string,
@@ -54,15 +71,7 @@ const addUserToCloud = async (
   }
 };
 
-const signUserOut = async () => {
-  try {
-    await FIREBASE_AUTH.signOut();
-  } catch (error) {
-    console.error("Error signing out:", error);
-  }
-};
-
-const getUserDataFromDB = async (uid: string): Promise<any> => {
+const getUserFromCloud = async (uid: string): Promise<any> => {
   const userRef = doc(FIREBASE_DB, "users", uid);
   try {
     const userDoc = await getDoc(userRef);
@@ -77,10 +86,33 @@ const getUserDataFromDB = async (uid: string): Promise<any> => {
   }
 };
 
+// --------------------------
+// Firebase Storage Functions
+// --------------------------
+
+const downlodImagesFromStorage = async () => {
+  const gsReference = ref(FIREBASE_STORAGE, "gs://nail-salon-app.appspot.com");
+  try {
+    const allItems = await listAll(gsReference);
+    const url = await Promise.all(
+      allItems.items.map(async (item) => {
+        return {
+          fullPath: item.fullPath,
+          imageUrl: await getDownloadURL(item),
+        };
+      })
+    );
+    return url;
+  } catch (error) {
+    console.error("Error getting images from storage:", error);
+  }
+};
+
 export default {
   sendVerification,
   confirmCode,
   addUserToCloud,
   signUserOut,
-  getUserDataFromDB,
+  getUserFromCloud,
+  downlodImagesFromStorage,
 };

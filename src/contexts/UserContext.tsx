@@ -51,7 +51,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const userDataFromDB = await firebase.getUserDataFromDB(authData.uid);
+        const userDataFromDB = await firebase.getUserFromCloud(authData.uid);
         setUserData({
           uid: userDataFromDB?.uid ?? null,
           name: userDataFromDB?.name ?? null,
