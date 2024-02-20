@@ -121,22 +121,20 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
     updateAuthData({
       isAuthenticationLoading: true,
     });
-    firebase
-      .confirmCode(verificationId as string, verificationCode)
-      .then((user) => {
-        if (user) {
-          const { uid, phoneNumber } = user.user;
-          firebase.addUserToCloud(uid, name, phoneNumber);
-        }
-      })
-      .catch((error) => {
-        console.error("Error confirming code:", error);
-      })
-      .finally(() => {
-        updateAuthData({
-          isAuthenticationLoading: false,
-        });
+    try {
+      await firebase.confirmCode(
+        name,
+        phoneNumber,
+        verificationId as string,
+        verificationCode
+      );
+    } catch (error) {
+      console.error("Error confirming verification code:", error);
+    } finally {
+      updateAuthData({
+        isAuthenticationLoading: false,
       });
+    }
   };
 
   /**

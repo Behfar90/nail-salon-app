@@ -5,6 +5,7 @@ import { useLoadingTime } from "@hooks";
 
 export interface AuthenticationDataType {
   uid: string | null;
+  displayName?: string | null;
   phoneNumber?: string | null;
   isAuthenticationLoading: boolean;
   createdAt?: Date | null;
@@ -18,6 +19,7 @@ export interface AuthContextPropsType {
 
 const initialState: AuthenticationDataType = {
   uid: null,
+  displayName: null,
   phoneNumber: null,
   isAuthenticationLoading: true,
   createdAt: null,
@@ -54,6 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setAuthData({
           ...authData,
           uid: user?.uid ?? null,
+          displayName: user?.displayName ?? null,
           phoneNumber: user?.phoneNumber ?? null,
           createdAt: new Date(Number(user.metadata.createdAt)),
           lastloginAt: new Date(Number(user.metadata.lastloginAt)),

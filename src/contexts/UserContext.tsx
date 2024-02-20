@@ -44,9 +44,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { authData } = useAuthContext();
-  const [userData, setUserData] = useState<SignedUserDataType>(
-    initialState as SignedUserDataType
-  );
+  const [userData, setUserData] = useState<SignedUserDataType>(initialState);
 
   useEffect(() => {
     const getUserData = async () => {

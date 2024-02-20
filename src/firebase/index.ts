@@ -1,5 +1,9 @@
 import { FIREBASE_AUTH, FIREBASE_DB, FIREBASE_STORAGE } from "@firebase/config";
-import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
+import {
+  PhoneAuthProvider,
+  signInWithCredential,
+  updateProfile,
+} from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 
@@ -23,18 +27,32 @@ const sendVerification = async (
 };
 
 const confirmCode = async (
+  name: string,
+  phoneNumber: string,
   verificationId: string,
   verificationCode: string
-): Promise<any> => {
+) => {
   try {
     const credential = PhoneAuthProvider.credential(
       verificationId,
       verificationCode
     );
-    return await signInWithCredential(FIREBASE_AUTH, credential);
+    const { user } = await signInWithCredential(FIREBASE_AUTH, credential);
+
+    // Update the user's display name on firebase/auth
+    await updateProfile(user, {
+      displayName: name,
+    });
+
+    // Add the user document to the firestore
+    await addUserToCloud(user.uid, name, phoneNumber);
   } catch (error) {
     console.error("Error confirming verification code:", error);
   }
+};
+
+const getCurrentUserDisplayName = () => {
+  return FIREBASE_AUTH.currentUser?.displayName;
 };
 
 const signUserOut = async () => {
@@ -59,7 +77,7 @@ const addUserToCloud = async (
     const userDoc = await getDoc(userRef);
     if (!userDoc.exists()) {
       // User does not exist, add to the database
-      const res = await setDoc(userRef, {
+      await setDoc(userRef, {
         id: uid,
         name: displayName,
         phone: phoneNumber,
@@ -110,6 +128,7 @@ const getImagesFromStorage = async () => {
 
 export default {
   sendVerification,
+  getCurrentUserDisplayName,
   confirmCode,
   addUserToCloud,
   signUserOut,
