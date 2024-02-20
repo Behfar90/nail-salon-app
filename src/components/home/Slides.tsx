@@ -9,6 +9,7 @@ import firebase from "@firebase/helpers";
 import React from "react";
 import { Image } from "@rneui/themed";
 import { colors } from "@utils";
+import LoadingPlaceholder from "../shared/LoadingPlaceholder";
 
 interface SlidesProps {
   fullPath: string;
@@ -27,11 +28,24 @@ export function Slides() {
     fetchData();
   }, []);
 
+  const loadingPlaceholder = React.useMemo(
+    () => (
+      <LoadingPlaceholder
+        width={Dimensions.get("screen").width * 0.8}
+        height={170}
+        showActivityIndicator={true}
+      />
+    ),
+    [Dimensions.get("screen").width]
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={slides}
         horizontal={true}
+        bounces={false}
+        ListEmptyComponent={loadingPlaceholder}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <Image
