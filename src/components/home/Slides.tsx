@@ -20,7 +20,7 @@ export function Slides() {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const imagesInStorage = await firebase.downlodImagesFromStorage();
+      const imagesInStorage = await firebase.getImagesFromStorage();
       setSlides(imagesInStorage ?? []);
     };
 

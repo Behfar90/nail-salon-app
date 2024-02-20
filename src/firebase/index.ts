@@ -90,7 +90,7 @@ const getUserFromCloud = async (uid: string): Promise<any> => {
 // Firebase Storage Functions
 // --------------------------
 
-const downlodImagesFromStorage = async () => {
+const getImagesFromStorage = async () => {
   const gsReference = ref(FIREBASE_STORAGE, "gs://nail-salon-app.appspot.com");
   try {
     const allItems = await listAll(gsReference);
@@ -114,5 +114,5 @@ export default {
   addUserToCloud,
   signUserOut,
   getUserFromCloud,
-  downlodImagesFromStorage,
+  getImagesFromStorage,
 };
