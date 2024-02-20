@@ -20,4 +20,7 @@ export const strings: { [key: string]: any } = {
     phone_country_code: "Phone number must start with a country code",
     verification_code_required: "Verification code is required",
   },
+  header: {
+    main: "Hey,",
+  },
 };

@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import React from "react";
 import { useAuthContext } from "@contexts";
-import { colors, icons } from "@utils";
+import { colors, icons, strings } from "@utils";
 
 export function Header() {
   const { authData } = useAuthContext();
@@ -9,8 +9,8 @@ export function Header() {
     <SafeAreaView style={{ marginTop: 20 }}>
       <View style={styles.container}>
         <View>
-          <Text style={{ fontSize: 22 }}>
-            Hello,{" "}
+          <Text style={{ fontSize: 20 }}>
+            {strings.header.main}{" "}
             <Text style={{ fontWeight: "bold" }}>{authData.phoneNumber}</Text>{" "}
             👋
           </Text>
