@@ -11,6 +11,8 @@ import {
 import React from "react";
 import { SubHeading } from "./SubHeading";
 import { colors, strings } from "@utils";
+import { useNavigation } from "@react-navigation/native";
+// png icons imports
 import art from "@assets/pngs/nail-art.png";
 import manicure from "@assets/pngs/manicure.png";
 import pedicure from "@assets/pngs/pedicure.png";
@@ -21,6 +23,8 @@ import polish from "@assets/pngs/nail-polish.png";
 const hatrdcodedCategories = strings.categories;
 
 export function Categories() {
+  const navigation = useNavigation();
+
   const categoryicon = (category: string): string | null => {
     switch (category) {
       case "Manicure":
@@ -50,7 +54,12 @@ export function Categories() {
         columnWrapperStyle={{ justifyContent: "space-between" }}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => console.log("Category Pressed: ", item)}
+            onPress={() =>
+              navigation.navigate("Service", {
+                category: item,
+                imageSrc: categoryicon(item),
+              })
+            }
             style={styles.categoryContainer}
           >
             <View

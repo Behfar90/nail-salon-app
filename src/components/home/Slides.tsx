@@ -9,7 +9,7 @@ import firebase from "@firebase/helpers";
 import React from "react";
 import { Image } from "@rneui/themed";
 import { colors } from "@utils";
-import LoadingPlaceholder from "../shared/LoadingPlaceholder";
+import { LoadingPlaceholder } from "@components";
 
 interface SlidesProps {
   fullPath: string;

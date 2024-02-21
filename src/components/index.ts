@@ -1,5 +1,7 @@
 export * from "./shared/ActionButton";
 export * from "./shared/InputField";
+export * from "./shared/LoadingPlaceholder";
+export * from "./shared/ScreenHeader";
 export * from "./start/SignupSteps";
 export * from "./home/Header";
 export * from "./home/Slides";

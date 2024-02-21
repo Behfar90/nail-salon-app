@@ -20,6 +20,11 @@ export const strings: { [key: string]: any } = {
     phone_country_code: "Phone number must start with a country code",
     verification_code_required: "Verification code is required",
   },
+  tabNavigator: {
+    home: "Home",
+    appointments: "Appointments",
+    profile: "Profile",
+  },
   header: {
     mainHeading: "Hey,",
     subHeading: "Welcome to NailCare!",

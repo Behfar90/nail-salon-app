@@ -31,6 +31,11 @@ const NotificationIcon: React.FC<{ size: number; color: string }> = ({
   color,
 }) => <MaterialIcons name="notifications" size={size} color={color} />;
 
+const BackIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <Ionicons name="arrow-back-circle-outline" size={size} color={color} />;
+
 export const icons = {
   HomeIcon,
   CalendarIcon,
@@ -38,4 +43,5 @@ export const icons = {
   PhoneIcon,
   VerifyIcon,
   NotificationIcon,
+  BackIcon,
 };
