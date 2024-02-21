@@ -15,9 +15,10 @@ export function Header() {
       <View style={styles.container}>
         <View>
           <Text style={{ fontSize: 20 }}>
-            {strings.header.main}{" "}
+            {strings.header.mainHeading}{" "}
             <Text style={{ fontWeight: "bold" }}>{displayName}</Text> 👋
           </Text>
+          <Text style={styles.subHeader}>{strings.header.subHeading}</Text>
         </View>
         {icons.NotificationIcon({ size: 26, color: colors.darkGray })}
       </View>
@@ -29,7 +30,11 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
+  },
+  subHeader: {
+    color: colors.darkGray,
+    fontSize: 14,
+    marginTop: 5,
   },
 });

@@ -1,6 +1,6 @@
 import { ScrollView } from "react-native";
 import React from "react";
-import { Slides, Header } from "@components";
+import { Slides, Header, Categories } from "@components";
 import { sharedStyles } from "@utils";
 
 export function Home() {
@@ -8,6 +8,7 @@ export function Home() {
     <ScrollView style={sharedStyles.wrapper}>
       <Header />
       <Slides />
+      <Categories />
     </ScrollView>
   );
 }
