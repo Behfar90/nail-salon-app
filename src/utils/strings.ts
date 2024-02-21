@@ -24,4 +24,5 @@ export const strings: { [key: string]: any } = {
     mainHeading: "Hey,",
     subHeading: "Welcome to NailCare!",
   },
+  categories: ["Manicure", "Pedicure", "Art", "Extension", "Repair", "Polish"],
 };

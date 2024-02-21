@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React from "react";
 import { SubHeading } from "./SubHeading";
-import { colors } from "@utils";
+import { colors, strings } from "@utils";
 import art from "@assets/pngs/nail-art.png";
 import manicure from "@assets/pngs/manicure.png";
 import pedicure from "@assets/pngs/pedicure.png";
@@ -18,14 +18,7 @@ import extension from "@assets/pngs/nail-extension.png";
 import repair from "@assets/pngs/nail-repair.png";
 import polish from "@assets/pngs/nail-polish.png";
 
-const hatrdcodedCategories = [
-  "Manicure",
-  "Pedicure",
-  "Art",
-  "Extension",
-  "Repair",
-  "Polish",
-];
+const hatrdcodedCategories = strings.categories;
 
 export function Categories() {
   const categoryicon = (category: string): string | null => {
