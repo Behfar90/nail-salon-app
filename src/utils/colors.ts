@@ -1,7 +1,14 @@
 export const colors = {
   primary: "#8840af",
-  darkGray: "#333",
-  lightGray: "#ccc",
+  secondary: "#f0f0f0",
   white: "#fff",
   black: "#000",
+  gray: "#B0B0B0",
+  darkGray: "#333",
+  lightGray: "#ccc",
+  error: "#FF0000",
+  success: "#00FF00",
+  warning: "#FFA500",
+  info: "#0000FF",
+  transparent: "transparent",
 };

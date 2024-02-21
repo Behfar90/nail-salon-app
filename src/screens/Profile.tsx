@@ -1,6 +1,6 @@
 import { useAuthContext, useUserContext } from "@contexts";
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Linking } from "react-native";
 import firebase from "@firebase/helpers";
 
 export function Profile() {
@@ -27,6 +27,12 @@ export function Profile() {
       <View style={styles.signOutButton}>
         <Button title="Sign Out" onPress={() => firebase.signUserOut()} />
       </View>
+      <Text
+        href="https://www.flaticon.com/free-icons/nails"
+        title="nails icons"
+      >
+        Nails icons created by Freepik - Flaticon
+      </Text>
     </View>
   );
 }

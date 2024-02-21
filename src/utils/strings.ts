@@ -21,6 +21,7 @@ export const strings: { [key: string]: any } = {
     verification_code_required: "Verification code is required",
   },
   header: {
-    main: "Hey,",
+    mainHeading: "Hey,",
+    subHeading: "Welcome to NailCare!",
   },
 };
