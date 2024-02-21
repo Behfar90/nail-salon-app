@@ -1,12 +1,6 @@
 import { colors } from "@utils";
 import React from "react";
-import {
-  View,
-  ActivityIndicator,
-  Animated,
-  StyleSheet,
-  Text,
-} from "react-native";
+import { ActivityIndicator, Animated, StyleSheet } from "react-native";
 
 type LoadingPlaceholderProps = {
   width: number;
@@ -14,7 +8,7 @@ type LoadingPlaceholderProps = {
   showActivityIndicator: boolean;
 };
 
-const LoadingPlaceholder = ({
+export const LoadingPlaceholder = ({
   width,
   height,
   showActivityIndicator,
@@ -47,10 +41,4 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: "hidden",
   },
-  textPlaceholder: {
-    fontSize: 16,
-    color: "#757575",
-  },
 });
-
-export default LoadingPlaceholder;
