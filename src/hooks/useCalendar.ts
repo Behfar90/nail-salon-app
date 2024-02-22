@@ -1,9 +1,20 @@
 import { useState } from "react";
-import { addMonths, subMonths, addDays, subDays } from "date-fns";
+import {
+  addMonths,
+  subMonths,
+  format,
+  eachDayOfInterval,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  isSameDay,
+} from "date-fns";
 
 export function useCalendar() {
+  // STATE
   const [currentDate, setCurrentDate] = useState(new Date());
 
+  // UPDATING FUNCTIONS
   const nextMonth = () => {
     setCurrentDate((prevDate) => addMonths(prevDate, 1));
   };
@@ -12,17 +23,43 @@ export function useCalendar() {
     setCurrentDate((prevDate) => subMonths(prevDate, 1));
   };
 
-  const currentMonth = () => {
-    return currentDate.getMonth();
+  // GETTERS
+
+  const getCurrentMonthName = (): string => {
+    return format(currentDate, "MMMM");
   };
 
-  const nextDay = () => {
-    setCurrentDate((prevDate) => addDays(prevDate, 1));
+  const getCurrentMonthDays = (): Date[] => {
+    const monthStart = startOfMonth(currentDate);
+    const monthEnd = endOfMonth(currentDate);
+
+    return eachDayOfInterval({
+      start: monthStart,
+      end: monthEnd,
+    });
   };
 
-  const prevDay = () => {
-    setCurrentDate((prevDate) => subDays(prevDate, 1));
+  const getFirstDayOfTheWeek = (date: Date): Date => {
+    return startOfWeek(date, { weekStartsOn: 1 });
   };
 
-  return { currentDate, currentMonth, nextMonth, prevMonth, nextDay, prevDay };
+  const getFormattedDate = (date: Date, dateFormat: string): string => {
+    return format(date, dateFormat);
+  };
+
+  // BOOLEAN CHECKS
+  const areDatesSameDay = (date1: Date, date2: Date): boolean => {
+    return isSameDay(date1, date2);
+  };
+
+  return {
+    currentDate,
+    nextMonth,
+    prevMonth,
+    getCurrentMonthName,
+    getCurrentMonthDays,
+    getFirstDayOfTheWeek,
+    getFormattedDate,
+    areDatesSameDay,
+  };
 }

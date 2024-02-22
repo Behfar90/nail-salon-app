@@ -1,6 +1,6 @@
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
 import React from "react";
-import { colors, sharedStyles } from "@utils";
+import { colors, sharedStyles, strings } from "@utils";
 import { DatePicker, ScreenHeader } from "@components";
 import CurvedSVG from "@assets/svgs/curvedView.svg";
 
@@ -11,7 +11,10 @@ export function Appointments() {
         <CurvedSVG style={{ color: colors.primary }} />
       </View>
       <View style={sharedStyles.wrapper}>
-        <ScreenHeader title="Appointments" color={colors.white} />
+        <ScreenHeader
+          title={strings.appointments.mainHeading}
+          color={colors.white}
+        />
         <DatePicker />
       </View>
     </ScrollView>

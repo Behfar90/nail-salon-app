@@ -30,4 +30,7 @@ export const strings: { [key: string]: any } = {
     subHeading: "Welcome to NailCare!",
   },
   categories: ["Manicure", "Pedicure", "Art", "Extension", "Repair", "Polish"],
+  appointments: {
+    mainHeading: "Appointments",
+  },
 };
