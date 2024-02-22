@@ -11,7 +11,7 @@ export function ScreenHeader({ title }: { title: string }) {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         {icons.BackIcon({ size: 30, color: "black" })}
       </TouchableOpacity>
-      <Text style={{ fontSize: 25 }}>{title}</Text>
+      <Text style={styles.header}>{title}</Text>
     </SafeAreaView>
   );
 }
@@ -21,7 +21,13 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
-    margin: 10,
+    marginVertical: 10,
+    width: "100%",
+  },
+  header: {
+    fontSize: 25,
+    fontWeight: "bold",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
 });
