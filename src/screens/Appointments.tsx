@@ -17,6 +17,7 @@ export function Appointments() {
         <ScreenHeader
           title={strings.appointments.mainHeading}
           color={colors.white}
+          goBack={false}
         />
         <DatePicker calendar={calendar} />
       </View>

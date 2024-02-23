@@ -31,10 +31,20 @@ const NotificationIcon: React.FC<{ size: number; color: string }> = ({
   color,
 }) => <MaterialIcons name="notifications" size={size} color={color} />;
 
-const BackIcon: React.FC<{ size: number; color: string }> = ({
+const BackCircleIcon: React.FC<{ size: number; color: string }> = ({
   size,
   color,
 }) => <Ionicons name="arrow-back-circle-outline" size={size} color={color} />;
+
+const ChevronBackIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <Ionicons name="chevron-back" size={size} color={color} />;
+
+const ChevronForwardIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <Ionicons name="chevron-forward" size={size} color={color} />;
 
 export const icons = {
   HomeIcon,
@@ -43,5 +53,7 @@ export const icons = {
   PhoneIcon,
   VerifyIcon,
   NotificationIcon,
-  BackIcon,
+  BackCircleIcon,
+  ChevronBackIcon,
+  ChevronForwardIcon,
 };

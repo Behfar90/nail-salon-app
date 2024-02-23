@@ -7,7 +7,7 @@ import {
   Dimensions,
 } from "react-native";
 import React from "react";
-import { colors } from "@utils";
+import { colors, icons } from "@utils";
 
 const DAY_WIDTH =
   Dimensions.get("screen").width * 0.12 > 45
@@ -25,6 +25,8 @@ export function DatePicker({
     areDatesSameDay,
     currentDate,
     setCurrentDate,
+    nextMonth,
+    prevMonth,
   },
 }: {
   calendar: any;
@@ -66,8 +68,14 @@ export function DatePicker({
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.monthContainer}>
+        <TouchableOpacity onPress={() => prevMonth()}>
+          {icons.ChevronBackIcon({ size: 18, color: colors.white })}
+        </TouchableOpacity>
         <Text style={styles.monthStr}>{getCurrentMonthName()}</Text>
+        <TouchableOpacity onPress={() => nextMonth()}>
+          {icons.ChevronForwardIcon({ size: 18, color: colors.white })}
+        </TouchableOpacity>
       </View>
       <FlatList
         data={monthDays}
@@ -95,10 +103,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
   },
+  monthContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 30,
+    gap: 20,
+  },
   monthStr: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 30,
     color: colors.white,
   },
   weekDay: {
