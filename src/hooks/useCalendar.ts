@@ -54,6 +54,7 @@ export function useCalendar() {
 
   return {
     currentDate,
+    setCurrentDate,
     nextMonth,
     prevMonth,
     getCurrentMonthName,

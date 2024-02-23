@@ -7,7 +7,6 @@ import {
   Dimensions,
 } from "react-native";
 import React from "react";
-import { useCalendar } from "@hooks";
 import { colors } from "@utils";
 
 const DAY_WIDTH =
@@ -17,16 +16,19 @@ const DAY_WIDTH =
 const DAY_HEIGHT = 70;
 const DAY_OFFSET = DAY_WIDTH;
 
-export function DatePicker() {
-  const {
+export function DatePicker({
+  calendar: {
     getCurrentMonthName,
     getCurrentMonthDays,
-    currentDate,
     getFirstDayOfTheWeek,
     getFormattedDate,
     areDatesSameDay,
-  } = useCalendar();
-
+    currentDate,
+    setCurrentDate,
+  },
+}: {
+  calendar: any;
+}) {
   const monthDays: Date[] = React.useMemo(
     () => getCurrentMonthDays(),
     [getCurrentMonthDays, currentDate]
@@ -44,7 +46,7 @@ export function DatePicker() {
     const dayString = getFormattedDate(item, "EEE");
     return (
       <TouchableOpacity
-        onPress={() => console.log("day pressed")}
+        onPress={() => setCurrentDate(item)}
         style={styles.weekDay}
       >
         <Text style={styles.weekDayStr}>{dayString}</Text>

@@ -1,10 +1,13 @@
-import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
+import { ScrollView, View, StyleSheet, Dimensions, Text } from "react-native";
 import React from "react";
 import { colors, sharedStyles, strings } from "@utils";
 import { DatePicker, ScreenHeader } from "@components";
 import CurvedSVG from "@assets/svgs/curvedView.svg";
+import { useCalendar } from "@hooks";
 
 export function Appointments() {
+  const calendar = useCalendar();
+
   return (
     <ScrollView style={{ position: "relative" }}>
       <View style={styles.headerContainerStyling}>
@@ -15,8 +18,10 @@ export function Appointments() {
           title={strings.appointments.mainHeading}
           color={colors.white}
         />
-        <DatePicker />
+        <DatePicker calendar={calendar} />
       </View>
+
+      <Text>{calendar.currentDate.toDateString()}</Text>
     </ScrollView>
   );
 }
