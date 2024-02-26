@@ -45,7 +45,9 @@ export function Services({
 }) {
   return (
     <View style={styles.container}>
-      <Text>{strings.services.mainHeading}</Text>
+      <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+        {strings.services.mainHeading}
+      </Text>
       <ScrollView style={styles.scrollContainer}>
         {availableServices.map((service, index) => {
           const isSelectedService = selectedService.name === service.name;

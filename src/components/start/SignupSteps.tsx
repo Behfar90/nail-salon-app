@@ -4,7 +4,7 @@ import { ActionButton, InputField } from "../index";
 import { Stepper } from "./Stepper";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { FIREBASE_APP } from "@firebase/config";
-import { colors, icons, strings } from "@utils";
+import { colors, icons, sharedStyles, strings } from "@utils";
 import firebase from "@firebase/helpers";
 import { useAuthContext } from "@contexts";
 
@@ -241,8 +241,8 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
         }
         isLoading={authData?.isAuthenticationLoading}
         onPress={stepperButtonHandler}
-        textStyle={styles.btnText}
-        touchableStyle={styles.button}
+        touchableStyle={sharedStyles.actionButtonTouchable}
+        textStyle={sharedStyles.actionButtonText}
       />
       <Stepper numberOfSteps={numberOfSteps} currentStep={step} />
     </Animated.View>
@@ -263,17 +263,5 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 30,
     width: Dimensions.get("screen").width * 0.8,
-  },
-  button: {
-    backgroundColor: colors.primary,
-    height: 55,
-    width: Dimensions.get("screen").width * 0.8,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  btnText: {
-    color: colors.white,
-    fontWeight: "700",
   },
 });
