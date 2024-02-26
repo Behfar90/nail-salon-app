@@ -43,4 +43,8 @@ export const strings: { [key: string]: any } = {
   services: {
     mainHeading: "Choose your service:",
   },
+  profile: {
+    mainHeading: "Profile",
+    logout: "Log Out",
+  },
 };
