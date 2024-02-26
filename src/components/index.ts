@@ -7,3 +7,4 @@ export * from "./home/Header";
 export * from "./home/Slides";
 export * from "./home/Categories";
 export * from "./appointments/DatePicker";
+export * from "./appointments/TimePicker";

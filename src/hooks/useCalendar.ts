@@ -12,7 +12,9 @@ import {
 
 export function useCalendar() {
   // STATE
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(
+    new Date().setHours(0, 0, 0, 0)
+  );
 
   // UPDATING FUNCTIONS
   const nextMonth = () => {
@@ -21,6 +23,12 @@ export function useCalendar() {
 
   const prevMonth = () => {
     setCurrentDate((prevDate) => subMonths(prevDate, 1));
+  };
+
+  const setTimeOnCurrentDate = (hours: number, minutes: number) => {
+    setCurrentDate((prevDate) =>
+      new Date(prevDate).setHours(hours, minutes, 0, 0)
+    );
   };
 
   // GETTERS
@@ -57,6 +65,7 @@ export function useCalendar() {
     setCurrentDate,
     nextMonth,
     prevMonth,
+    setTimeOnCurrentDate,
     getCurrentMonthName,
     getCurrentMonthDays,
     getFirstDayOfTheWeek,

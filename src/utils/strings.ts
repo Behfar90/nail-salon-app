@@ -33,4 +33,8 @@ export const strings: { [key: string]: any } = {
   appointments: {
     mainHeading: "Appointments",
   },
+  timePicker: {
+    morning: "Morning",
+    afternoon: "Afternoon",
+  },
 };

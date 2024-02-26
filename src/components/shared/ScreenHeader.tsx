@@ -1,4 +1,10 @@
-import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { colors, icons } from "@utils";
@@ -31,8 +37,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10,
     width: "100%",
+    marginVertical: Dimensions.get("window").height * 0.01,
   },
   header: {
     fontSize: 25,
