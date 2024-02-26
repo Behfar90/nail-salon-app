@@ -1,11 +1,19 @@
 import { ScrollView, View, StyleSheet, Dimensions, Text } from "react-native";
 import React from "react";
 import { colors, sharedStyles, strings } from "@utils";
-import { DatePicker, ScreenHeader, TimePicker } from "@components";
+import { DatePicker, ScreenHeader, TimePicker, Services } from "@components";
 import CurvedSVG from "@assets/svgs/curvedView.svg";
 import { useCalendar } from "@hooks";
 
+export type serviceObject = {
+  name: string;
+  price: number;
+};
+
 export function Appointments() {
+  const [selectedService, setSelectedService] = React.useState(
+    {} as serviceObject
+  );
   const calendar = useCalendar();
 
   return (
@@ -21,6 +29,10 @@ export function Appointments() {
         />
         <DatePicker calendar={calendar} />
         <TimePicker calendar={calendar} />
+        <Services
+          selectedService={selectedService}
+          selectHandler={setSelectedService}
+        />
       </View>
     </ScrollView>
   );

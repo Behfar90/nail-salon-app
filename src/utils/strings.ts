@@ -37,4 +37,7 @@ export const strings: { [key: string]: any } = {
     morning: "Morning",
     afternoon: "Afternoon",
   },
+  services: {
+    mainHeading: "Choose your service:",
+  },
 };

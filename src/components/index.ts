@@ -8,3 +8,4 @@ export * from "./home/Slides";
 export * from "./home/Categories";
 export * from "./appointments/DatePicker";
 export * from "./appointments/TimePicker";
+export * from "./appointments/Services";
