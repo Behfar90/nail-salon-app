@@ -6,6 +6,7 @@ import ReversedCurvedSVG from "@assets/svgs/reversedCurvedView.svg";
 import { colors, icons, sharedStyles, strings } from "@utils";
 import {
   ActionButton,
+  AppointmentHistory,
   ScreenHeader,
   UserAppointmentTab,
   UserInfo,
@@ -69,9 +70,7 @@ export function Profile() {
           </Text>
         </View>
       ) : (
-        <View style={styles.appointmentHistory}>
-          <Text>Appointment History</Text>
-        </View>
+        <AppointmentHistory />
       )}
       <ActionButton
         label={strings.profile.logout}
@@ -100,11 +99,6 @@ const styles = StyleSheet.create({
   profileInfo: {
     display: "flex",
     gap: 30,
-    alignItems: "center",
-  },
-  appointmentHistory: {
-    display: "flex",
-    justifyContent: "center",
     alignItems: "center",
   },
 });
