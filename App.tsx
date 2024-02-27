@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthStack, UserNavigation } from "@navigations";
+import { AuthStack, RoleStack } from "@navigations";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogBox } from "react-native";
 import { AuthProvider, UserProvider, useAuthContext } from "@contexts";
@@ -22,7 +22,7 @@ const Routes = () => {
   /* If user is logged in, show the user navigation, else show the auth stack */
   return authData?.uid && !authData.isAuthenticationLoading ? (
     <UserProvider>
-      <UserNavigation />
+      <RoleStack />
     </UserProvider>
   ) : (
     <AuthStack />

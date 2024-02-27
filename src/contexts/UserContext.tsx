@@ -11,7 +11,7 @@ import { useAuthContext } from "./AuthContext";
 export interface SignedUserDataType {
   uid: string | null;
   name?: string | null;
-  role?: "admin" | "user";
+  role?: "admin" | "user" | null;
   isUserLoading: boolean;
 }
 
@@ -23,7 +23,7 @@ export interface UserContextPropsType {
 const initialState: SignedUserDataType = {
   uid: null,
   name: null,
-  role: "user",
+  role: null,
   isUserLoading: true,
 };
 
@@ -50,12 +50,22 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const getUserData = async () => {
       try {
         const userDataFromDB = await firebase.getUserFromCloud(authData.uid);
-        setUserData({
-          uid: userDataFromDB?.uid ?? null,
-          name: userDataFromDB?.name ?? null,
-          role: userDataFromDB?.isAdmin ? "admin" : "user",
-          isUserLoading: false,
-        });
+
+        if (userDataFromDB) {
+          setUserData({
+            isUserLoading: false,
+            uid: userDataFromDB?.uid ?? null,
+            name: userDataFromDB?.name ?? null,
+            role: userDataFromDB?.isAdmin ? "admin" : "user",
+          });
+        } else {
+          setUserData({
+            uid: null,
+            name: null,
+            role: null,
+            isUserLoading: false,
+          });
+        }
       } catch (error) {
         // Handle error (e.g., log it or set an error state)
         console.error("Error fetching user data:", error);

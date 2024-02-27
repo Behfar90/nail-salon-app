@@ -1,12 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
-import { Appointments, Home, Users } from "@screens";
+import { Appointments, Home, Profile } from "@screens";
 import { colors, icons } from "@utils";
 
 const Tab = createBottomTabNavigator();
 
 export function AdminNavigation() {
+  console.log("AdminNavigation");
   return (
     <Tab.Navigator
       screenOptions={{
@@ -35,8 +35,8 @@ export function AdminNavigation() {
         }}
       />
       <Tab.Screen
-        name="Users"
-        component={Users}
+        name="Profile"
+        component={Profile}
         options={{
           tabBarIcon: ({ color, size }) => icons.PersonIcon({ size, color }),
         }}

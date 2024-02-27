@@ -8,6 +8,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export function UserNavigation() {
+  console.log("UserNavigation");
   return (
     <Tab.Navigator
       screenOptions={{
