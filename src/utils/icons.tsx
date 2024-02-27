@@ -46,6 +46,16 @@ const ChevronForwardIcon: React.FC<{ size: number; color: string }> = ({
   color,
 }) => <Ionicons name="chevron-forward" size={size} color={color} />;
 
+const TelIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <MaterialIcons name="phone" size={size} color={color} />;
+
+const MemberSinceIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <MaterialIcons name="card-membership" size={size} color={color} />;
+
 export const icons = {
   HomeIcon,
   CalendarIcon,
@@ -56,4 +66,6 @@ export const icons = {
   BackCircleIcon,
   ChevronBackIcon,
   ChevronForwardIcon,
+  TelIcon,
+  MemberSinceIcon,
 };

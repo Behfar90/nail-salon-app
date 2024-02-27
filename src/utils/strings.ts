@@ -46,5 +46,10 @@ export const strings: { [key: string]: any } = {
   profile: {
     mainHeading: "Profile",
     logout: "Log Out",
+    userInformationTab: "User Information",
+    appointmentHistoryTab: "Appointment History",
+    displayName: "Display Name as",
+    phoneNumber: "Signed in with Phone Number",
+    membersince: "Member Since",
   },
 };

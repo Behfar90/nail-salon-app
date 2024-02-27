@@ -1,71 +1,110 @@
 import { useAuthContext } from "@contexts";
 import React from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Linking,
-  Dimensions,
-} from "react-native";
+import { View, StyleSheet, Dimensions, Text, Linking } from "react-native";
 import firebase from "@firebase/helpers";
 import ReversedCurvedSVG from "@assets/svgs/reversedCurvedView.svg";
-import { colors, sharedStyles, strings } from "@utils";
-import { ActionButton, ScreenHeader } from "@components";
+import { colors, icons, sharedStyles, strings } from "@utils";
+import {
+  ActionButton,
+  ScreenHeader,
+  UserAppointmentTab,
+  UserInfo,
+} from "@components";
 
 export function Profile() {
+  const [activeIndex, setActiveIndex] = React.useState(0);
   const { authData } = useAuthContext();
 
   return (
-    <View style={sharedStyles.wrapper}>
+    <View
+      style={
+        (sharedStyles.wrapper,
+        { justifyContent: "space-between", height: "100%" })
+      }
+    >
       <View style={styles.headerContainerStyling}>
-        <ReversedCurvedSVG style={{ color: colors.secondary }} />
+        <ReversedCurvedSVG style={{ color: colors.primary }} />
       </View>
-      <View style={styles.profileInfo}>
+
+      <View style={styles.tabContainer}>
         <ScreenHeader
           title={strings.profile.mainHeading}
-          color={colors.black}
+          color={colors.white}
           goBack={false}
         />
-        <View>
-          <Text>Display name: {authData.displayName}</Text>
-          <Text>Tel: {authData.phoneNumber}</Text>
-          <Text>Member since: {authData.createdAt?.toDateString()}</Text>
+        <UserAppointmentTab
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+        />
+      </View>
+      {activeIndex === 0 ? (
+        <View style={styles.profileInfo}>
+          <UserInfo
+            icon={icons.PersonIcon({ size: 24, color: colors.blue })}
+            title={strings.profile.displayName}
+            value={authData.displayName}
+          />
+          <UserInfo
+            icon={icons.TelIcon({ size: 24, color: colors.tertiary })}
+            title={strings.profile.phoneNumber}
+            value={authData.phoneNumber}
+          />
+          <UserInfo
+            icon={icons.MemberSinceIcon({ size: 24, color: colors.red })}
+            title={strings.profile.membersince}
+            value={authData.createdAt?.toDateString()}
+          />
 
           <Text
-            href="https://www.flaticon.com/free-icons/nails"
-            title="nails icons"
+            onPress={() =>
+              Linking.openURL("https://www.flaticon.com/free-icons/nails")
+            }
+            style={{
+              color: "blue",
+              fontSize: 12,
+              textDecorationLine: "underline",
+            }}
           >
             Nails icons created by Freepik - Flaticon
           </Text>
         </View>
-        <ActionButton
-          label={strings.profile.logout}
-          touchableStyle={sharedStyles.actionButtonTouchable}
-          textStyle={sharedStyles.actionButtonText}
-          onPress={() => firebase.signUserOut()}
-        />
-      </View>
+      ) : (
+        <View style={styles.appointmentHistory}>
+          <Text>Appointment History</Text>
+        </View>
+      )}
+      <ActionButton
+        label={strings.profile.logout}
+        touchableStyle={[
+          sharedStyles.actionButtonTouchable,
+          { marginBottom: 20 },
+        ]}
+        textStyle={sharedStyles.actionButtonText}
+        onPress={() => firebase.signUserOut()}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   headerContainerStyling: {
     position: "absolute",
     top: 0,
     width: Dimensions.get("window").width * 1,
     height: Dimensions.get("window").height * 0.3,
   },
+  tabContainer: {
+    width: "100%",
+    height: Dimensions.get("window").height * 0.2,
+  },
   profileInfo: {
     display: "flex",
-    height: Dimensions.get("window").height * 0.8,
+    gap: 30,
     alignItems: "center",
-    justifyContent: "space-between",
+  },
+  appointmentHistory: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

@@ -9,3 +9,5 @@ export * from "./home/Categories";
 export * from "./appointments/DatePicker";
 export * from "./appointments/TimePicker";
 export * from "./appointments/Services";
+export * from "./profile/UserAppointmentTab";
+export * from "./profile/UserInfo";
