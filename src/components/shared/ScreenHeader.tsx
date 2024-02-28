@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { colors, icons } from "@utils";
+import { colors, icons, sharedStyles } from "@utils";
 
 export function ScreenHeader({
   title,
@@ -21,7 +21,7 @@ export function ScreenHeader({
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[sharedStyles.partialWrapper, styles.container]}>
       {goBack && (
         <TouchableOpacity onPress={() => navigation.goBack()}>
           {icons.BackCircleIcon({ size: 30, color: color ?? colors.black })}

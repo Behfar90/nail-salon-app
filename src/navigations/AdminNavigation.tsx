@@ -6,7 +6,6 @@ import { colors, icons } from "@utils";
 const Tab = createBottomTabNavigator();
 
 export function AdminNavigation() {
-  console.log("AdminNavigation");
   return (
     <Tab.Navigator
       screenOptions={{

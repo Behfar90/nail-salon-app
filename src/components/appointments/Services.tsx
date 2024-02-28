@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { Dispatch, SetStateAction } from "react";
-import { colors, strings } from "@utils";
+import { colors, sharedStyles, strings } from "@utils";
 import { serviceObject } from "@screens";
 
 const availableServices = [
@@ -44,7 +44,7 @@ export function Services({
   selectHandler: Dispatch<SetStateAction<serviceObject>>;
 }) {
   return (
-    <View style={styles.container}>
+    <View style={[sharedStyles.partialWrapper, styles.container]}>
       <Text style={{ fontWeight: "bold", fontSize: 16 }}>
         {strings.services.mainHeading}
       </Text>

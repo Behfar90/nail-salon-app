@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-import { colors, strings } from "@utils";
+import { colors, sharedStyles, strings } from "@utils";
 
 const availableTimes = [
   "9:00",
@@ -71,7 +71,7 @@ export function TimePicker({
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[sharedStyles.partialWrapper, styles.container]}>
       {timeBoxHandler(strings.timePicker.morning, availableTimes)}
       {timeBoxHandler(strings.timePicker.afternoon, availableTimes)}
     </View>

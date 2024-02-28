@@ -1,4 +1,11 @@
-import { ScrollView, View, StyleSheet, Dimensions, Text } from "react-native";
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  FlatList,
+} from "react-native";
 import React from "react";
 import { colors, sharedStyles, strings } from "@utils";
 import {
@@ -22,26 +29,47 @@ export function Appointments() {
   );
   const calendar = useCalendar();
 
-  return (
-    <View style={{ flex: 1 }}>
-      <ScrollView style={{ position: "relative" }}>
+  const scrollableData = [
+    {
+      key: "curevedSVG",
+      component: (
         <View style={styles.headerContainerStyling}>
           <CurvedSVG style={{ color: colors.primary }} />
         </View>
-        <View style={sharedStyles.wrapper}>
-          <ScreenHeader
-            title={strings.appointments.mainHeading}
-            color={colors.white}
-            goBack={false}
-          />
-          <DatePicker calendar={calendar} />
-          <TimePicker calendar={calendar} />
-          <Services
-            selectedService={selectedService}
-            selectHandler={setSelectedService}
-          />
-        </View>
-      </ScrollView>
+      ),
+    },
+    {
+      key: "screenHeader",
+      component: (
+        <ScreenHeader
+          title={strings.appointments.mainHeading}
+          color={colors.white}
+          goBack={false}
+        />
+      ),
+    },
+    { key: "datePicker", component: <DatePicker calendar={calendar} /> },
+    { key: "timePicker", component: <TimePicker calendar={calendar} /> },
+    {
+      key: "services",
+      component: (
+        <Services
+          selectedService={selectedService}
+          selectHandler={setSelectedService}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <View style={{ flex: 1, position: "relative" }}>
+      <FlatList
+        data={scrollableData}
+        renderItem={({ item }) => item.component}
+        keyExtractor={(item) => item.key}
+        showsVerticalScrollIndicator={false}
+      />
+
       <ActionButton
         label={strings.appointment.confirmButton}
         touchableStyle={[

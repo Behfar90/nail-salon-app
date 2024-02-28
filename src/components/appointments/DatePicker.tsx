@@ -7,7 +7,7 @@ import {
   Dimensions,
 } from "react-native";
 import React from "react";
-import { colors, icons } from "@utils";
+import { colors, icons, sharedStyles } from "@utils";
 
 const DAY_WIDTH =
   Dimensions.get("screen").width * 0.12 > 45
@@ -67,7 +67,7 @@ export function DatePicker({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[sharedStyles.partialWrapper, styles.container]}>
       <View style={styles.monthContainer}>
         <TouchableOpacity onPress={() => prevMonth()}>
           {icons.ChevronBackIcon({ size: 18, color: colors.white })}

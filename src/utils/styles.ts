@@ -9,6 +9,9 @@ export const sharedStyles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 20,
   },
+  partialWrapper: {
+    paddingHorizontal: 20,
+  },
   actionButtonTouchable: {
     backgroundColor: colors.primary,
     alignSelf: "center",
