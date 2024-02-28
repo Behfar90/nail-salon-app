@@ -52,4 +52,8 @@ export const strings: { [key: string]: any } = {
     phoneNumber: "Signed in with Phone Number",
     membersince: "Member Since",
   },
+  headerAdmin: {
+    mainHeading: "Hey,",
+    subHeading: "Today is ",
+  },
 };

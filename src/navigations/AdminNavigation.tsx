@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Appointments, Home, Profile } from "@screens/user";
+import { Calendar, Home } from "@screens/admin";
 import { colors, icons } from "@utils";
 
 const Tab = createBottomTabNavigator();
@@ -27,17 +27,10 @@ export function AdminNavigation() {
         }}
       />
       <Tab.Screen
-        name="Appointments"
-        component={Appointments}
+        name="Calendar"
+        component={Calendar}
         options={{
           tabBarIcon: ({ color, size }) => icons.CalendarIcon({ size, color }),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarIcon: ({ color, size }) => icons.PersonIcon({ size, color }),
         }}
       />
     </Tab.Navigator>
