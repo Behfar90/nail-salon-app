@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Appointments, Home, Profile, Service } from "@screens";
+import { Appointments, Home, Profile, Service } from "@screens/user";
 import { colors, icons, strings } from "@utils";
 
 const Tab = createBottomTabNavigator();

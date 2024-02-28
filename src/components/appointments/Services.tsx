@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React, { Dispatch, SetStateAction } from "react";
 import { colors, sharedStyles, strings } from "@utils";
-import { serviceObject } from "@screens";
+import { serviceObject } from "@screens/user";
 
 const availableServices = [
   {
