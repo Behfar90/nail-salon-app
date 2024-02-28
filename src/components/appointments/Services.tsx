@@ -48,7 +48,10 @@ export function Services({
       <Text style={{ fontWeight: "bold", fontSize: 16 }}>
         {strings.services.mainHeading}
       </Text>
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
         {availableServices.map((service, index) => {
           const isSelectedService = selectedService.name === service.name;
           return (

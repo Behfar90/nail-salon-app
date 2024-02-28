@@ -10,8 +10,6 @@ const Stack = createNativeStackNavigator();
 export function RoleStack() {
   const { userData } = useUserContext();
 
-  console.log("RoleStack", userData.role, userData.isUserLoading);
-
   if (userData.isUserLoading) {
     return (
       <ActivityIndicator
