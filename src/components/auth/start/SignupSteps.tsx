@@ -105,7 +105,7 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
 
   const sendVerificationCode = async () => {
     updateAuthData({
-      isAuthenticationLoading: true,
+      isLoading: true,
     });
     const verId = await firebase.sendVerification(
       phoneNumber,
@@ -113,13 +113,13 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
     );
     setVerificationId(verId);
     updateAuthData({
-      isAuthenticationLoading: false,
+      isLoading: false,
     });
   };
 
   const handleConfirmation = async () => {
     updateAuthData({
-      isAuthenticationLoading: true,
+      isLoading: true,
     });
     try {
       await firebase.confirmCode(
@@ -132,7 +132,7 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
       console.error("Error confirming verification code:", error);
     } finally {
       updateAuthData({
-        isAuthenticationLoading: false,
+        isLoading: false,
       });
     }
   };
@@ -239,7 +239,7 @@ export function SignupSteps({ numberOfSteps }: SignupStepsProps) {
             `stepper_btn_step_${step}` as keyof typeof strings.start
           ]
         }
-        isLoading={authData?.isAuthenticationLoading}
+        isLoading={authData?.isLoading}
         onPress={stepperButtonHandler}
         touchableStyle={sharedStyles.actionButtonTouchable}
         textStyle={sharedStyles.actionButtonText}

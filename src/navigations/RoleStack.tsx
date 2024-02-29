@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 export function RoleStack() {
   const { userData } = useUserContext();
 
-  if (userData.isUserLoading) {
+  if (userData.isLoading) {
     return (
       <ActivityIndicator
         size="large"

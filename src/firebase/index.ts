@@ -5,7 +5,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
+import {
+  ref,
+  getDownloadURL,
+  listAll,
+  deleteObject,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 // --------------------------
 // Firebase Auth Functions
@@ -126,6 +132,44 @@ const getImagesFromStorage = async () => {
   }
 };
 
+const removeImageFromStorage = async (fullPath: string) => {
+  const gsReference = ref(FIREBASE_STORAGE, fullPath);
+  try {
+    await deleteObject(gsReference);
+  } catch (error) {
+    console.error("Error removing image from storage:", error);
+  }
+};
+
+const addImageToStorage = async (
+  imageUri: string
+): Promise<boolean | undefined> => {
+  try {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", imageUri, true);
+      xhr.send(null);
+    });
+
+    const gsReference = ref(FIREBASE_STORAGE, `${new Date().getTime()}`);
+
+    const image = new File([blob as Blob], "image.jpg", { type: "image/jpeg" });
+
+    const result = await uploadBytesResumable(gsReference, image);
+
+    return result?.state === "success" ?? false;
+  } catch (error) {
+    console.error("Error adding image to storage:", error);
+  }
+};
+
 export default {
   sendVerification,
   getCurrentUserDisplayName,
@@ -134,4 +178,6 @@ export default {
   signUserOut,
   getUserFromCloud,
   getImagesFromStorage,
+  removeImageFromStorage,
+  addImageToStorage,
 };

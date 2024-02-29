@@ -56,4 +56,9 @@ export const strings: { [key: string]: any } = {
     mainHeading: "Hey,",
     subHeading: "Today is ",
   },
+  slidesAdmin: {
+    mainHeading: "Slides Images",
+    addSlide: "Add Slide",
+    noSlidesText: "No slides been added",
+  },
 };

@@ -7,7 +7,7 @@ export interface AuthenticationDataType {
   uid: string | null;
   displayName?: string | null;
   phoneNumber?: string | null;
-  isAuthenticationLoading: boolean;
+  isLoading: boolean;
   createdAt?: Date | null;
   lastloginAt?: Date | null;
 }
@@ -21,7 +21,7 @@ const initialState: AuthenticationDataType = {
   uid: null,
   displayName: null,
   phoneNumber: null,
-  isAuthenticationLoading: true,
+  isLoading: true,
   createdAt: null,
   lastloginAt: null,
 };
@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setTimeout(() => {
             setAuthData((prevAuthData) => ({
               ...prevAuthData,
-              isAuthenticationLoading: false,
+              isLoading: false,
             }));
           }, 1000 - actualLoadingTime);
         }
@@ -77,7 +77,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setAuthData({
           uid: null,
           phoneNumber: null,
-          isAuthenticationLoading: false,
+          isLoading: false,
           createdAt: null,
           lastloginAt: null,
         });

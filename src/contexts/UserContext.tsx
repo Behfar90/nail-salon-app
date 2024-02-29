@@ -12,7 +12,7 @@ export interface SignedUserDataType {
   uid: string | null;
   name?: string | null;
   role?: "admin" | "user" | null;
-  isUserLoading: boolean;
+  isLoading: boolean;
 }
 
 export interface UserContextPropsType {
@@ -24,7 +24,7 @@ const initialState: SignedUserDataType = {
   uid: null,
   name: null,
   role: null,
-  isUserLoading: true,
+  isLoading: true,
 };
 
 const UserContext = createContext<UserContextPropsType>({
@@ -53,7 +53,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
         if (userDataFromDB) {
           setUserData({
-            isUserLoading: false,
+            isLoading: false,
             uid: userDataFromDB?.uid ?? null,
             name: userDataFromDB?.name ?? null,
             role: userDataFromDB?.isAdmin ? "admin" : "user",
@@ -63,7 +63,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             uid: null,
             name: null,
             role: null,
-            isUserLoading: false,
+            isLoading: false,
           });
         }
       } catch (error) {
