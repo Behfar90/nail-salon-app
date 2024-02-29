@@ -4,7 +4,7 @@ import { useCalendar } from "@hooks";
 import { useUserContext } from "@contexts";
 import { colors, strings } from "@utils";
 
-export function AdminHeader() {
+export function Header() {
   const { currentDate, getFormattedDate } = useCalendar();
   const { userData } = useUserContext();
 

@@ -25,4 +25,18 @@ export const sharedStyles = StyleSheet.create({
     color: colors.white,
     fontWeight: "700",
   },
+  elevatedView: {
+    width: Dimensions.get("window").width * 0.9,
+    borderWidth: 1,
+    borderColor: colors.lightGray,
+    borderRadius: 15,
+    shadowColor: colors.gray,
+    shadowOffset: {
+      width: 5,
+      height: 10,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 5,
+  },
 });

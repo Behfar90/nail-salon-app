@@ -9,7 +9,7 @@ import React from "react";
 import { strings, sharedStyles } from "@utils";
 import LoginSVG from "@assets/svgs/login.svg";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { SignupSteps } from "@components";
+import { SignupSteps } from "@components/auth";
 
 export function Start() {
   return (

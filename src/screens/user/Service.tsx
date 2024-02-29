@@ -1,7 +1,7 @@
 import { ScrollView, Image } from "react-native";
 import React from "react";
 import { sharedStyles } from "@utils";
-import { ScreenHeader } from "@components";
+import { ScreenHeader } from "@components/shared";
 
 export function Service({
   route: { params: { category, imageSrc } } = {

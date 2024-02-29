@@ -4,7 +4,7 @@ import { useAuthContext } from "@contexts";
 import { colors, icons, strings } from "@utils";
 import firebase from "@firebase/helpers";
 
-export function UserHeader() {
+export function Header() {
   const { authData } = useAuthContext();
 
   const displayName =

@@ -5,12 +5,11 @@ import firebase from "@firebase/helpers";
 import ReversedCurvedSVG from "@assets/svgs/reversedCurvedView.svg";
 import { colors, icons, sharedStyles, strings } from "@utils";
 import {
-  ActionButton,
   AppointmentHistory,
-  ScreenHeader,
   UserAppointmentTab,
   UserInfo,
-} from "@components";
+} from "@components/user";
+import { ActionButton, ScreenHeader } from "@components/shared";
 
 export function Profile() {
   const [activeIndex, setActiveIndex] = React.useState(0);

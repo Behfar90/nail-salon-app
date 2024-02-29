@@ -1,11 +1,11 @@
 import { FlatList, View } from "react-native";
 import React from "react";
-import { Slides, UserHeader, Categories } from "@components";
+import { Slides, Header, Categories } from "@components/user";
 import { sharedStyles } from "@utils";
 
 export function Home() {
   const scrollableData = [
-    { key: "header", component: <UserHeader /> },
+    { key: "header", component: <Header /> },
     { key: "slides", component: <Slides /> },
     { key: "categories", component: <Categories /> },
   ];

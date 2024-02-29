@@ -1,20 +1,8 @@
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Dimensions,
-  Text,
-  FlatList,
-} from "react-native";
+import { View, StyleSheet, Dimensions, FlatList } from "react-native";
 import React from "react";
 import { colors, sharedStyles, strings } from "@utils";
-import {
-  DatePicker,
-  ScreenHeader,
-  TimePicker,
-  Services,
-  ActionButton,
-} from "@components";
+import { DatePicker, TimePicker, Services } from "@components/user";
+import { ActionButton, ScreenHeader } from "@components/shared";
 import CurvedSVG from "@assets/svgs/curvedView.svg";
 import { useCalendar } from "@hooks";
 

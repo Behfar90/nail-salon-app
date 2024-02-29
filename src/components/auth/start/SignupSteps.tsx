@@ -1,6 +1,6 @@
 import { Alert, Animated, Dimensions, StyleSheet } from "react-native";
 import React from "react";
-import { ActionButton, InputField } from "../index";
+import { ActionButton, InputField } from "@components/shared";
 import { Stepper } from "./Stepper";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { FIREBASE_APP } from "@firebase/config";
