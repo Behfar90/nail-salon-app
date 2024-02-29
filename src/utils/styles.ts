@@ -26,10 +26,6 @@ export const sharedStyles = StyleSheet.create({
     fontWeight: "700",
   },
   elevatedView: {
-    width: Dimensions.get("window").width * 0.9,
-    borderWidth: 1,
-    borderColor: colors.lightGray,
-    borderRadius: 15,
     shadowColor: colors.gray,
     shadowOffset: {
       width: 5,

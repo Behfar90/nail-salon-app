@@ -56,6 +56,21 @@ const MemberSinceIcon: React.FC<{ size: number; color: string }> = ({
   color,
 }) => <MaterialIcons name="card-membership" size={size} color={color} />;
 
+const ExpandIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <MaterialIcons name="expand-more" size={size} color={color} />;
+
+const CollapseIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <MaterialIcons name="expand-less" size={size} color={color} />;
+
+const CloseCircleIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <Ionicons name="close-circle" size={size} color={color} />;
+
 export const icons = {
   HomeIcon,
   CalendarIcon,
@@ -68,4 +83,7 @@ export const icons = {
   ChevronForwardIcon,
   TelIcon,
   MemberSinceIcon,
+  ExpandIcon,
+  CollapseIcon,
+  CloseCircleIcon,
 };

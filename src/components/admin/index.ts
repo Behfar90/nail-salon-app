@@ -1,2 +1,2 @@
 export * from "./home/Header";
-export * from "./home/Slices";
+export * from "./home/Slides";
