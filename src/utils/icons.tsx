@@ -71,6 +71,11 @@ const CloseCircleIcon: React.FC<{ size: number; color: string }> = ({
   color,
 }) => <Ionicons name="close-circle" size={size} color={color} />;
 
+const UserIcon: React.FC<{ size: number; color: string }> = ({
+  size,
+  color,
+}) => <Ionicons name="person" size={size} color={color} />;
+
 export const icons = {
   HomeIcon,
   CalendarIcon,
@@ -86,4 +91,5 @@ export const icons = {
   ExpandIcon,
   CollapseIcon,
   CloseCircleIcon,
+  UserIcon,
 };

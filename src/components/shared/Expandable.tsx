@@ -14,7 +14,7 @@ export function Expandable({
   children,
 }: {
   title: string;
-  children: React.ReactNode[];
+  children: React.ReactNode[] | React.ReactNode;
 }) {
   const [expanded, setExpanded] = React.useState<boolean>(false);
   const shouldExpand = useExpandable(expanded);

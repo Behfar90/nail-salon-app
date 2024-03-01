@@ -1,4 +1,5 @@
 export const strings: { [key: string]: any } = {
+  loading: "Loading...",
   start: {
     mainHeader: "Your Ultimate Nail Care Destination!",
     subHeader:
@@ -60,5 +61,10 @@ export const strings: { [key: string]: any } = {
     mainHeading: "Slides Images",
     addSlide: "Add Slide",
     noSlidesText: "No slides been added",
+  },
+  usersAdmin: {
+    mainHeading: "List of Users",
+    noUserInList: "No users been added",
+    noName: "No name",
   },
 };

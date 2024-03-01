@@ -4,7 +4,7 @@ import {
   signInWithCredential,
   updateProfile,
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, collection, getDocs } from "firebase/firestore";
 import {
   ref,
   getDownloadURL,
@@ -110,6 +110,20 @@ const getUserFromCloud = async (uid: string): Promise<any> => {
   }
 };
 
+const getAllUsersFromCloud = async (): Promise<any> => {
+  const usersListRef = collection(FIREBASE_DB, "users");
+  try {
+    const usersListDoc = await getDocs(usersListRef);
+    if (usersListDoc) {
+      return usersListDoc.docs.map((doc) => doc.data());
+    } else {
+      return Promise.resolve(null);
+    }
+  } catch {
+    console.error("Error getting all users data from the db");
+  }
+};
+
 // --------------------------
 // Firebase Storage Functions
 // --------------------------
@@ -177,6 +191,7 @@ export default {
   addUserToCloud,
   signUserOut,
   getUserFromCloud,
+  getAllUsersFromCloud,
   getImagesFromStorage,
   removeImageFromStorage,
   addImageToStorage,

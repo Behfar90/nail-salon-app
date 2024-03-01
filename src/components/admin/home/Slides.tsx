@@ -1,7 +1,6 @@
 import {
   Text,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   View,
   FlatList,
@@ -23,7 +22,6 @@ const IMAGE_WIDTH = 50;
 const IMAGE_HEIGHT = 50;
 
 export function Slides() {
-  const [expanded, setExpanded] = React.useState<boolean>(false);
   const [slides, setSlides] = React.useState<SlidesProps[]>([]);
   const [imageLoaded, setImageLoaded] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -43,7 +41,7 @@ export function Slides() {
         <Text>{strings.slidesAdmin.noSlidesText}</Text>
       </View>
     ),
-    [Dimensions.get("screen").width]
+    [strings.slidesAdmin.noSlidesText]
   );
 
   const hasMediaLibraryPermissionGranted = async () => {
@@ -99,6 +97,11 @@ export function Slides() {
       console.error("Error removing image from storage:", error);
     }
   };
+
+  const title =
+    slides.length === 0
+      ? strings.loading
+      : `${strings.slidesAdmin.mainHeading} (${slides.length})`;
 
   return (
     <Expandable title={`${strings.slidesAdmin.mainHeading} (${slides.length})`}>
