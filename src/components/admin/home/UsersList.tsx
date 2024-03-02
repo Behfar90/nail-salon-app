@@ -48,7 +48,6 @@ export function UsersList() {
       <FlatList
         data={users}
         bounces={false}
-        keyExtractor={(item) => item.uid}
         style={{ maxHeight: Dimensions.get("window").height * 0.4 }}
         showsVerticalScrollIndicator={true}
         ListEmptyComponent={noUserInList}

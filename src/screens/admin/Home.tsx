@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import React from "react";
 import { sharedStyles } from "@utils";
-import { Header, Slides, UsersList } from "@components/admin";
+import { Header, Notification, Slides, UsersList } from "@components/admin";
 
 export function Home() {
   return (
@@ -9,6 +9,7 @@ export function Home() {
       <Header />
       <Slides />
       <UsersList />
+      <Notification />
     </View>
   );
 }

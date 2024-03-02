@@ -67,4 +67,9 @@ export const strings: { [key: string]: any } = {
     noUserInList: "No users been added",
     noName: "No name",
   },
+  notification: {
+    mainHeading: "Push Notification",
+    buttonTextNormal: "Send Notification",
+    buttonTextCertain: "Are you sure?",
+  },
 };

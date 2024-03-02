@@ -76,6 +76,10 @@ const UserIcon: React.FC<{ size: number; color: string }> = ({
   color,
 }) => <Ionicons name="person" size={size} color={color} />;
 
+const MailIcon = ({ size, color }: { size: number; color: string }) => (
+  <MaterialIcons name="mail" size={size} color={color} />
+);
+
 export const icons = {
   HomeIcon,
   CalendarIcon,
@@ -92,4 +96,5 @@ export const icons = {
   CollapseIcon,
   CloseCircleIcon,
   UserIcon,
+  MailIcon,
 };
