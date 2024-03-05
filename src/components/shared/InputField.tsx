@@ -1,4 +1,5 @@
 import { colors } from "@utils";
+import { max } from "date-fns";
 import React from "react";
 import {
   StyleSheet,
@@ -16,6 +17,8 @@ interface InputFieldProps {
   autoFocus?: boolean;
   inputType?: string;
   inputValue?: string;
+  maxHeight?: number;
+  marginTop?: number;
   inputChangeHandler?: (arg0?: any) => void;
   keyboardType?: KeyboardTypeOptions;
   autoCompleteType?: any;
@@ -29,6 +32,8 @@ export function InputField({
   autoFocus = false,
   inputType,
   inputValue,
+  maxHeight,
+  marginTop,
   inputChangeHandler,
   keyboardType = "default",
   autoCompleteType,
@@ -38,7 +43,10 @@ export function InputField({
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
+      style={[
+        styles.container,
+        { maxHeight: maxHeight ?? null, marginTop: marginTop ?? 0 },
+      ]}
     >
       {icon}
       {inputType === "password" ? (

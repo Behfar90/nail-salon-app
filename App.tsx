@@ -3,10 +3,13 @@ import { AuthStack, RoleStack } from "@navigations";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogBox } from "react-native";
 import { AuthProvider, UserProvider, useAuthContext } from "@contexts";
+import { usePushNotifications } from "@hooks";
 
 LogBox.ignoreAllLogs();
 
 export default function App() {
+  const { notification } = usePushNotifications();
+
   return (
     <AuthProvider>
       <NavigationContainer>

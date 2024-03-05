@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1091140708723",
+    "project_id": "nail-salon-app",
+    "storage_bucket": "nail-salon-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091140708723:android:cdab3e22e3f03c52b8fd06",
+        "android_client_info": {
+          "package_name": "com.beff90.nailsalonapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091140708723-bdlltc2alc5j9namld96v2to557pilk4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn8Hq1F-NilW3XUG76_n58KDeTOL1kVa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091140708723-bdlltc2alc5j9namld96v2to557pilk4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

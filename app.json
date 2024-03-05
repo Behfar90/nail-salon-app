@@ -6,13 +6,15 @@
     "scheme": "nail-salon-app",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "icon": "./assets/pngs/logo.png",
+    "notification": {
+      "icon": "./assets/pngs/logo.png"
+    },
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.beff90.nail-salon-app"
@@ -21,10 +23,9 @@
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
-      "package": "com.beff90.nailsalonapp"
+      "permissions": ["android.permission.RECORD_AUDIO"],
+      "package": "com.beff90.nailsalonapp",
+      "googleServicesFile": "./google-services.json"
     },
     "plugins": [
       [

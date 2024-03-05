@@ -1,124 +1,57 @@
 import {
   View,
-  Text,
   StyleSheet,
   Dimensions,
-  Button,
-  Platform,
+  TextInput,
+  Keyboard,
 } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { ActionButton, Expandable, InputField } from "@components/shared";
 import { colors, icons, sharedStyles, strings } from "@utils";
-
-import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+import { usePushNotifications } from "@hooks";
+import { Input } from "@rneui/themed";
 
 export function Notification() {
-  // const [notification, setNotification] = React.useState<string>("");
-  // const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  // const [cautiousLevel, setCautiousLevel] = React.useState<number>(1);
+  const [notificationTitle, setNotificationTitle] = React.useState<string>("");
+  const [notificationBody, setNotificationBody] = React.useState<string>("");
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [cautiousLevel, setCautiousLevel] = React.useState<number>(1);
 
-  const [expoPushToken, setExpoPushToken] = useState("");
-  const [notification, setNotification] =
-    useState<Notifications.Notification>();
-  const notificationListener = useRef<Notifications.Subscription>();
-  const responseListener = useRef<Notifications.Subscription>();
+  const { expoPushToken } = usePushNotifications();
 
-  useEffect(() => {
-    const registerAndSetPushToken = async () => {
-      const token = await registerForPushNotificationsAsync();
-      setExpoPushToken(token);
-    };
-
-    registerAndSetPushToken();
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        console.log("notification", notification);
-        setNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-
-    return () => {
-      if (notificationListener.current) {
-        Notifications.removeNotificationSubscription(
-          notificationListener.current
-        );
-      }
-      if (responseListener.current) {
-        Notifications.removeNotificationSubscription(responseListener.current);
-      }
-    };
-  }, []);
-
-  async function registerForPushNotificationsAsync() {
-    let token;
-    console.log("Device: ", Device.isDevice);
-    if (Device.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
-        return;
-      }
-      token = (
-        await Notifications.getExpoPushTokenAsync({
-          projectId: "53425895-c111-475f-8c36-d8fc036e26a6",
-        })
-      ).data;
-    } else {
-      alert("Must use physical device for Push Notifications");
+  const sendNotificationHandler = async () => {
+    if (cautiousLevel != 0) {
+      setCautiousLevel(cautiousLevel - 1);
+      return;
     }
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
+    setIsLoading(true);
+    try {
+      await sendPushNotification();
+    } catch (error) {
+      console.error("Error sending notification: ", error);
     }
-    return token;
-  }
+    setIsLoading(false);
+  };
 
-  // const senNotificationHandler = () => {
-  //   if (cautiousLevel != 0) {
-  //     setCautiousLevel(cautiousLevel - 1);
-  //     return;
-  //   }
-  //   setIsLoading(true);
-  //   // send notification process
-  //   setIsLoading(false);
-  // };
+  const resetHandler = () => {
+    setCautiousLevel(1);
+    setNotificationTitle("");
+    setNotificationBody("");
+  };
 
-  // const resetHandler = () => {
-  //   setCautiousLevel(1);
-  //   setNotification("");
-  // };
-
-  async function sendPushNotification(expoPushToken: string) {
+  async function sendPushNotification() {
     const message = {
       to: expoPushToken,
       sound: "default",
-      title: "Test title",
-      body: "Test body",
+      title: notificationTitle,
+      body: notificationBody,
       data: { testData: "test data" },
+      priority: "high",
+      ttl: 0,
+      channelId: "default",
+      vibrate: true,
+      badge: 1,
+      _displayInForeground: true,
     };
 
     await fetch("https://exp.host/--/api/v2/push/send", {
@@ -130,41 +63,54 @@ export function Notification() {
       },
       body: JSON.stringify(message),
     }).then((response) => {
-      console.log("response:", response);
+      console.log("Notification sent", JSON.stringify(response, null, 2));
+      resetHandler();
+      Keyboard.dismiss();
     });
   }
 
   return (
-    // <Expandable title={strings.notification.mainHeading}>
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "space-around",
-      }}
-    >
-      <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Text>
-          Notification Title:{" "}
-          {notification && notification.request.content.title}{" "}
-        </Text>
-        <Text>
-          Notification Body: {notification && notification.request.content.body}
-        </Text>
-        <Text>
-          Notification Data:{" "}
-          {notification && JSON.stringify(notification.request.content.data)}
-        </Text>
+    <Expandable title={strings.notification.mainHeading}>
+      <View>
+        <View style={styles.inputContainer}>
+          <InputField
+            label={strings.notification.notificationTitle}
+            inputValue={notificationTitle}
+            inputChangeHandler={setNotificationTitle}
+            inputType="text"
+            autoFocus={false}
+            icon={icons.TitleIcon({ size: 20, color: colors.gray })}
+            autoCompleteType="off"
+            fieldButtonLabel={strings.notification.reset}
+            fieldButtonClickHandler={resetHandler}
+            maxHeight={30}
+          />
+
+          <InputField
+            label={strings.notification.notificationBody}
+            inputValue={notificationBody}
+            inputChangeHandler={setNotificationBody}
+            inputType="text"
+            autoFocus={false}
+            icon={icons.MailIcon({ size: 20, color: colors.gray })}
+            autoCompleteType="off"
+            maxHeight={30}
+            marginTop={20}
+          />
+        </View>
+        <ActionButton
+          label={
+            cautiousLevel == 1
+              ? strings.notification.buttonTextNormal
+              : strings.notification.buttonTextCertain
+          }
+          onPress={sendNotificationHandler}
+          isLoading={isLoading}
+          touchableStyle={sharedStyles.actionButtonTouchable}
+          textStyle={sharedStyles.actionButtonText}
+        />
       </View>
-      <Button
-        title="Press to Send Notification"
-        onPress={async () => {
-          await sendPushNotification(expoPushToken);
-        }}
-      />
-    </View>
-    // </Expandable>
+    </Expandable>
   );
 }
 
@@ -172,6 +118,18 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 20,
     width: Dimensions.get("screen").width * 0.8,
-    height: 30,
+    height: 80,
+  },
+  textAreaContainer: {
+    width: Dimensions.get("screen").width * 0.8,
+    // height: 60,
+  },
+  textAreaInput: {
+    borderWidth: 1,
+    borderColor: colors.lightGray,
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 20,
+    marginHorizontal: 3,
   },
 });

@@ -71,5 +71,8 @@ export const strings: { [key: string]: any } = {
     mainHeading: "Push Notification",
     buttonTextNormal: "Send Notification",
     buttonTextCertain: "Are you sure?",
+    notificationTitle: "Message Title",
+    notificationBody: "Message Body",
+    reset: "Reset",
   },
 };
