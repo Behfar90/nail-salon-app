@@ -1,15 +1,8 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  TextInput,
-  Keyboard,
-} from "react-native";
+import { View, StyleSheet, Dimensions, Keyboard } from "react-native";
 import React from "react";
 import { ActionButton, Expandable, InputField } from "@components/shared";
 import { colors, icons, sharedStyles, strings } from "@utils";
 import { usePushNotifications } from "@hooks";
-import { Input } from "@rneui/themed";
 
 export function Notification() {
   const [notificationTitle, setNotificationTitle] = React.useState<string>("");
