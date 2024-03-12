@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import { colors, sharedStyles, strings } from "@utils";
+import { TimeBox } from "@components/shared";
 
 const availableTimes = [
   "9:00",
@@ -41,26 +42,15 @@ export function TimePicker({
               const isSelected = selected === item + time;
 
               return (
-                <TouchableOpacity
-                  style={[
-                    styles.timeBox,
-                    isSelected ? styles.selectedTime : styles.unselectedTime,
-                  ]}
-                  onPress={() => {
+                <TimeBox
+                  isSelected={isSelected}
+                  label={item}
+                  selectHandler={() => {
                     setSelected(item + time);
                     const [hours, minutes] = item.split(":");
                     setTimeOnCurrentDate(Number(hours), Number(minutes));
                   }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      color: isSelected ? colors.white : colors.black,
-                    }}
-                  >
-                    {item}
-                  </Text>
-                </TouchableOpacity>
+                />
               );
             }}
           />
@@ -93,26 +83,5 @@ const styles = StyleSheet.create({
     borderLeftColor: colors.lightGray,
     paddingTop: 10,
     // height: Dimensions.get("window").height * 0.1,
-  },
-  timeBox: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: 55,
-    height: 30,
-    borderRadius: 5,
-    paddingHorizontal: 5,
-    borderWidth: 1,
-    marginHorizontal: 8,
-    marginVertical: 5,
-  },
-  selectedTime: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
-    color: colors.white,
-  },
-  unselectedTime: {
-    backgroundColor: colors.transparent,
-    borderColor: colors.lightGray,
   },
 });
