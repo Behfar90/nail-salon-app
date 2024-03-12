@@ -68,7 +68,7 @@ export const strings: { [key: string]: any } = {
     noName: "No name",
   },
   notification: {
-    mainHeading: "Push Notification",
+    mainHeading: "Push Notification (BETA)",
     buttonTextNormal: "Send Notification",
     buttonTextCertain: "Are you sure?",
     notificationTitle: "Message Title",

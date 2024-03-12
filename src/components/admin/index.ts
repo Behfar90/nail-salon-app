@@ -2,3 +2,5 @@ export * from "./home/Header";
 export * from "./home/Slides";
 export * from "./home/UsersList";
 export * from "./home/Notification";
+export * from "./calendar/CustomHeader";
+export * from "./calendar/DateDetails";

@@ -1,36 +1,78 @@
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import React from "react";
-import { colors, sharedStyles } from "@utils";
-import { Calendar as DatePicker } from "react-native-calendars";
+import { colors } from "@utils";
+import { DateData, CalendarList as DatePicker } from "react-native-calendars";
+import { CustomHeader, DateDetails } from "@components/admin";
+import { useCalendarAdmin } from "@hooks";
+
+const theme = {
+  todayTextColor: colors.primary,
+  "stylesheet.calendar.header": {
+    dayTextAtIndex5: {
+      color: colors.red,
+    },
+    dayTextAtIndex6: {
+      color: colors.red,
+    },
+  },
+};
 
 export function Calendar() {
-  const [selected, setSelected] = React.useState<null | number>(null);
+  const {
+    selected,
+    setSelected,
+    longSelectedRange,
+    updateSelectRange,
+    marked,
+    initialDate,
+    RANGE,
+  } = useCalendarAdmin();
+
+  const onDayPress = (day: DateData): void => {
+    setSelected(day.dateString);
+  };
+
   return (
-    <View style={sharedStyles.wrapper}>
+    <View style={styles.wrapper}>
       <DatePicker
-        onDayPress={(day) => {
-          setSelected(day.timestamp);
-        }}
-        theme={{
-          calendarBackground: colors.white,
-        }}
         style={styles.calendar}
-        markedDates={{
-          [selected]: {
-            selected: true,
-            disableTouchEvent: true,
-            selectedColor: colors.primary,
-          },
+        current={initialDate}
+        onDayPress={onDayPress}
+        onDayLongPress={(day) => updateSelectRange(day.dateString)}
+        markedDates={marked}
+        renderHeader={CustomHeader}
+        markingType={"period"}
+        onVisibleMonthsChange={(months) => {
+          console.log("now these months are visible", months);
         }}
+        firstDay={1}
+        pastScrollRange={RANGE}
+        futureScrollRange={RANGE}
+        horizontal={true}
+        pagingEnabled={true}
+        showScrollIndicator={false}
+        theme={theme}
+        // calendarWidth={320}
       />
-      <Text>{selected}</Text>
+
+      <DateDetails date={selected} />
+      {longSelectedRange.start && longSelectedRange.end && (
+        <Text>
+          Range has been selected from {longSelectedRange.start} to{" "}
+          {longSelectedRange.end}
+        </Text>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    paddingTop: 60,
+  },
   calendar: {
-    width: Dimensions.get("window").width * 0.9,
+    height: Dimensions.get("window").height * 0.4,
     borderWidth: 1,
     borderColor: colors.lightGray,
     borderRadius: 15,

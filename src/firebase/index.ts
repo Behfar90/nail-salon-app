@@ -119,8 +119,8 @@ const getAllUsersFromCloud = async (): Promise<any> => {
     } else {
       return Promise.resolve(null);
     }
-  } catch {
-    console.error("Error getting all users data from the db");
+  } catch (error) {
+    console.error("Error getting all users data from the db", error);
   }
 };
 
