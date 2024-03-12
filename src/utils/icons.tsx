@@ -84,6 +84,10 @@ const TitleIcon = ({ size, color }: { size: number; color: string }) => (
   <MaterialIcons name="title" size={size} color={color} />
 );
 
+const LogoutIcon = ({ size, color }: { size: number; color: string }) => (
+  <MaterialIcons name="logout" size={size} color={color} />
+);
+
 export const icons = {
   HomeIcon,
   CalendarIcon,
@@ -102,4 +106,5 @@ export const icons = {
   UserIcon,
   MailIcon,
   TitleIcon,
+  LogoutIcon,
 };

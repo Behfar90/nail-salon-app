@@ -1,8 +1,15 @@
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { useCalendarUser } from "@hooks";
 import { useUserContext } from "@contexts";
-import { colors, strings } from "@utils";
+import { colors, icons, strings } from "@utils";
+import firebase from "@firebase/helpers";
 
 export function Header() {
   const { currentDate, getFormattedDate } = useCalendarUser();
@@ -23,6 +30,9 @@ export function Header() {
             {getFormattedDate(currentDate, "dd, LLLL yyyy")}
           </Text>
         </View>
+        <TouchableOpacity onPress={() => firebase.signUserOut()}>
+          {icons.LogoutIcon({ size: 30, color: colors.darkGray })}
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
