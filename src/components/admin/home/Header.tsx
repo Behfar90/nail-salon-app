@@ -1,11 +1,11 @@
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import React from "react";
-import { useCalendar } from "@hooks";
+import { useCalendarUser } from "@hooks";
 import { useUserContext } from "@contexts";
 import { colors, strings } from "@utils";
 
 export function Header() {
-  const { currentDate, getFormattedDate } = useCalendar();
+  const { currentDate, getFormattedDate } = useCalendarUser();
   const { userData } = useUserContext();
 
   const adminName = userData?.name ?? "Admin";

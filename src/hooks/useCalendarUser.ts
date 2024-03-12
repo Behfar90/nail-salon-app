@@ -10,7 +10,7 @@ import {
   isSameDay,
 } from "date-fns";
 
-export function useCalendar() {
+export function useCalendarUser() {
   // STATE
   const [currentDate, setCurrentDate] = useState(
     new Date().setHours(0, 0, 0, 0)

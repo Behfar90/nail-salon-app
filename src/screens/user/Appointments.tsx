@@ -4,7 +4,7 @@ import { colors, sharedStyles, strings } from "@utils";
 import { DatePicker, TimePicker, Services } from "@components/user";
 import { ActionButton, ScreenHeader } from "@components/shared";
 import CurvedSVG from "@assets/svgs/curvedView.svg";
-import { useCalendar } from "@hooks";
+import { useCalendarUser } from "@hooks";
 
 export type serviceObject = {
   name: string;
@@ -15,7 +15,7 @@ export function Appointments() {
   const [selectedService, setSelectedService] = React.useState(
     {} as serviceObject
   );
-  const calendar = useCalendar();
+  const calendar = useCalendarUser();
 
   const scrollableData = [
     {
