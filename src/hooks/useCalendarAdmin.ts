@@ -5,7 +5,7 @@ import React from "react";
 const RANGE = 50; // Max amount of months allowed to scroll to the past/future. Default = 50
 const initialDate = new Date().toISOString().split("T")[0];
 
-type rangeType = { start: string; end: string };
+export type rangeType = { start: string; end: string };
 
 export function useCalendarAdmin() {
   const [selected, setSelected] = React.useState(initialDate);
@@ -68,11 +68,16 @@ export function useCalendarAdmin() {
     }
   };
 
+  const resetSelectRange = () => {
+    setLongSelectedRange({ start: "", end: "" });
+  };
+
   return {
     selected,
     setSelected,
     longSelectedRange,
     updateSelectRange,
+    resetSelectRange,
     marked,
     initialDate,
     RANGE,

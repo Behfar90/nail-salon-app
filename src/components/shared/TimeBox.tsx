@@ -1,7 +1,6 @@
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { colors } from "@utils";
-import { BackgroundImage } from "@rneui/themed/dist/config";
 
 type TimeBoxShape = "rectangular" | "rounded";
 
@@ -14,7 +13,7 @@ export function TimeBox({
 }: {
   isSelected: boolean;
   label: string;
-  selectHandler: () => void;
+  selectHandler?: () => void;
   color?: string;
   shape?: TimeBoxShape;
 }) {

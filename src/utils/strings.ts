@@ -75,4 +75,15 @@ export const strings: { [key: string]: any } = {
     notificationBody: "Message Body",
     reset: "Reset",
   },
+  calendar: {
+    dateDetailsTitle1: "Selected date is",
+    dateDetailsTitle2: "Selected range from",
+    dateStartsAt: "Day starts at",
+    dateEndsAt: "Day ends at",
+    noBreaksText: "No breaks",
+    breaksText: "Breaks",
+    addBreakText: "Add Break",
+    breakStartsAt: "Break starts at",
+    breakEndsAt: "Break ends at",
+  },
 };
