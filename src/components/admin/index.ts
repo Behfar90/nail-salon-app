@@ -6,3 +6,4 @@ export * from "./calendar/CustomHeader";
 export * from "./calendar/DayTitle";
 export * from "./calendar/DayTimeRangePickers";
 export * from "./calendar/DayBreaks";
+export * from "./calendar/DaysOff";

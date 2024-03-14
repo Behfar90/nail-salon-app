@@ -1,14 +1,32 @@
 import { colors } from "@utils";
-import { eachDayOfInterval, addDays, subDays } from "date-fns";
+import { eachDayOfInterval, addDays, subDays, format, set } from "date-fns";
 import React from "react";
 
+type rangeType = { start: string; end: string };
+
+interface DateDataType {
+  startAt: string;
+  endAt: string;
+  isOff: boolean;
+  breaks: { from: string; to: string }[];
+}
+
 const RANGE = 50; // Max amount of months allowed to scroll to the past/future. Default = 50
+const DEFAULT_DAY_DETAILS: DateDataType = {
+  startAt: "08:00",
+  endAt: "16:00",
+  isOff: false,
+  breaks: [
+    {
+      from: "12:00",
+      to: "13:00",
+    },
+  ],
+};
 const initialDate = new Date().toISOString().split("T")[0];
 
-export type rangeType = { start: string; end: string };
-
 export function useCalendarAdmin() {
-  const [selected, setSelected] = React.useState(initialDate);
+  const [selected, setSelected] = React.useState("");
   const [longSelectedRange, setLongSelectedRange] = React.useState<rangeType>({
     start: "",
     end: "",
@@ -46,11 +64,15 @@ export function useCalendarAdmin() {
         color: colors.secondary,
         textColor: colors.darkGray,
       },
-      [selected]: {
-        disableTouchEvent: true,
-        color: colors.primary,
-        textColor: colors.white,
-      },
+      ...(selected !== ""
+        ? {
+            [selected]: {
+              disableTouchEvent: true,
+              color: colors.primary,
+              textColor: colors.white,
+            },
+          }
+        : {}),
     };
   }, [selected, longSelectedRange.start, longSelectedRange.end]);
 
@@ -72,14 +94,19 @@ export function useCalendarAdmin() {
     setLongSelectedRange({ start: "", end: "" });
   };
 
+  const getFormattedDate = (date: string, pattern: string) =>
+    format(new Date(date), pattern);
+
   return {
     selected,
     setSelected,
     longSelectedRange,
     updateSelectRange,
     resetSelectRange,
+    getFormattedDate,
     marked,
     initialDate,
     RANGE,
+    DEFAULT_DAY_DETAILS,
   };
 }

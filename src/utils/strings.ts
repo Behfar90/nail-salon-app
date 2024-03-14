@@ -78,6 +78,7 @@ export const strings: { [key: string]: any } = {
   calendar: {
     dateDetailsTitle1: "Selected date is",
     dateDetailsTitle2: "Selected range from",
+    blankPagetext: "No date has been selected",
     dateStartsAt: "Day starts at",
     dateEndsAt: "Day ends at",
     noBreaksText: "No breaks",
@@ -85,5 +86,7 @@ export const strings: { [key: string]: any } = {
     addBreakText: "Add Break",
     breakStartsAt: "Break starts at",
     breakEndsAt: "Break ends at",
+    daysOffText: "Days Off",
+    saveText: "Save",
   },
 };

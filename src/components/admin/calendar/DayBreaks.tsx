@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { colors, icons, strings } from "@utils";
 import { TimerPickerModal } from "react-native-timer-picker";
-import { TimeBox } from "@components/shared";
+import { ActionButton, TimeBox } from "@components/shared";
 
 export function DayBreaks({
   dayStartsAt,
@@ -42,9 +42,12 @@ export function DayBreaks({
           {strings.calendar.breaksText}{" "}
           {breaks.length ? `(${breaks.length})` : ""}
         </Text>
-        <TouchableOpacity onPress={() => setShowBreakStartingTimePicker(true)}>
-          <Text style={styles.addBreak}>{strings.calendar.addBreakText}</Text>
-        </TouchableOpacity>
+        <ActionButton
+          label={strings.calendar.addBreakText}
+          onPress={() => setShowBreakStartingTimePicker(true)}
+          textStyle={styles.addBreak}
+          touchableStyle={styles.addBreakTouchable}
+        />
       </View>
       <View style={{ flexDirection: "row" }}>
         <FlatList
@@ -144,6 +147,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  addBreakTouchable: {
+    padding: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: colors.primary,
   },
   addBreak: {
     color: colors.primary,

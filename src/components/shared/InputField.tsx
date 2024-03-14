@@ -1,5 +1,4 @@
 import { colors } from "@utils";
-import { max } from "date-fns";
 import React from "react";
 import {
   StyleSheet,

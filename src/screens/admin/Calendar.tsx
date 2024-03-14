@@ -1,14 +1,16 @@
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, Text, FlatList } from "react-native";
 import React from "react";
-import { colors } from "@utils";
+import { colors, sharedStyles, strings } from "@utils";
 import { DateData, CalendarList as DatePicker } from "react-native-calendars";
 import {
   CustomHeader,
   DayTitle,
   DayTimeRangePickers,
   DayBreaks,
+  DaysOff,
 } from "@components/admin";
 import { useCalendarAdmin } from "@hooks";
+import { ActionButton } from "@components/shared";
 
 const theme = {
   todayTextColor: colors.primary,
@@ -22,47 +24,91 @@ const theme = {
   },
 };
 
-const dummy = {
-  startsAt: "09:30",
-  endsAt: "18:00",
-  breaks: [
-    {
-      from: "10:00",
-      to: "11:00",
-    },
-    {
-      from: "13:00",
-      to: "14:00",
-    },
-  ],
-};
-
-interface DayAppointmentType {
-  startsAt: string;
-  endsAt: string;
-  breaks: {
-    from: string;
-    to: string;
-  }[];
-}
-
 export function Calendar() {
-  const [data, setData] = React.useState<DayAppointmentType>(dummy);
   const {
     selected,
     setSelected,
     longSelectedRange,
     updateSelectRange,
     resetSelectRange,
+    getFormattedDate,
     marked,
     initialDate,
     RANGE,
+    DEFAULT_DAY_DETAILS,
   } = useCalendarAdmin();
+  const [data, setData] = React.useState(DEFAULT_DAY_DETAILS);
+
+  const isLongRangeSelected = Boolean(
+    longSelectedRange?.start.length && longSelectedRange?.end.length
+  );
 
   const onDayPress = (day: DateData): void => {
     setSelected(day.dateString);
     resetSelectRange();
   };
+
+  const selectedRangeWeekDays = (): { id: number; name: string }[] => {
+    if (!selected && !isLongRangeSelected) return [];
+
+    if (!isLongRangeSelected && selected)
+      return [{ id: 0, name: getFormattedDate(selected, "EEEE").slice(0, 3) }];
+
+    const rangeSelectedDays = Array.from(
+      new Set(
+        Object.keys(marked).map((day) =>
+          getFormattedDate(day, "EEEE").slice(0, 3)
+        )
+      )
+    );
+    return rangeSelectedDays.map((day, index) => ({ id: index, name: day }));
+  };
+
+  const scrollableData = [
+    {
+      key: "dayTitle",
+      component: <DayTitle date={selected} longRange={longSelectedRange} />,
+    },
+    {
+      key: "dayTimeRangePickers",
+      component: (
+        <DayTimeRangePickers
+          startsAt={data.startAt}
+          endsAt={data.endAt}
+          timeChangehandler={(newStartTime: string, newEndTime: string) =>
+            setData({ ...data, startAt: newStartTime, endAt: newEndTime })
+          }
+        />
+      ),
+    },
+    {
+      key: "dayBreaks",
+      component: (
+        <DayBreaks
+          dayStartsAt={data.startAt}
+          breaks={data.breaks}
+          breakRemover={(index) =>
+            setData({
+              ...data,
+              breaks: data.breaks.filter((_, i) => i !== index),
+            })
+          }
+          newBreakAdder={(newBreak) =>
+            setData({ ...data, breaks: [...data.breaks, newBreak] })
+          }
+        />
+      ),
+    },
+    {
+      key: "daysOff",
+      component: (
+        <DaysOff
+          weekDays={selectedRangeWeekDays()}
+          isLongRangeSelected={isLongRangeSelected}
+        />
+      ),
+    },
+  ];
 
   return (
     <View style={styles.wrapper}>
@@ -87,29 +133,26 @@ export function Calendar() {
         // calendarWidth={320}
       />
 
-      <View style={styles.detailsContainer}>
-        <DayTitle date={selected} longRange={longSelectedRange} />
-        <DayTimeRangePickers
-          startsAt={data.startsAt}
-          endsAt={data.endsAt}
-          timeChangehandler={(newStartTime: string, newEndTime: string) =>
-            setData({ ...data, startsAt: newStartTime, endsAt: newEndTime })
-          }
-        />
-        <DayBreaks
-          dayStartsAt={data.startsAt}
-          breaks={data.breaks}
-          breakRemover={(index) =>
-            setData({
-              ...data,
-              breaks: data.breaks.filter((_, i) => i !== index),
-            })
-          }
-          newBreakAdder={(newBreak) =>
-            setData({ ...data, breaks: [...data.breaks, newBreak] })
-          }
-        />
-      </View>
+      {selected || isLongRangeSelected ? (
+        <View style={styles.detailsContainer}>
+          <FlatList
+            data={scrollableData}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => item.component}
+            keyExtractor={(item) => item.key}
+          />
+          <ActionButton
+            label={strings.calendar.saveText}
+            onPress={() => console.log("save")}
+            touchableStyle={sharedStyles.actionButtonTouchable}
+            textStyle={sharedStyles.actionButtonText}
+          />
+        </View>
+      ) : (
+        <View style={styles.blankPage}>
+          <Text>{strings.calendar.blankPagetext}</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -121,6 +164,7 @@ const styles = StyleSheet.create({
   },
   calendar: {
     height: Dimensions.get("window").height * 0.4,
+    maxHeight: 400,
     borderWidth: 1,
     borderColor: colors.lightGray,
     borderRadius: 15,
@@ -134,7 +178,16 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   detailsContainer: {
+    height: Dimensions.get("window").height * 0.4,
+    display: "flex",
+    justifyContent: "space-between",
     marginTop: 20,
     paddingHorizontal: 10,
+    gap: 10,
+  },
+  blankPage: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
