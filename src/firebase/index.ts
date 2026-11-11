@@ -124,6 +124,24 @@ const getAllUsersFromCloud = async (): Promise<any> => {
   }
 };
 
+const addDaysToCloud = async (timestamp: string, days: string[]): Promise<void> => {
+  const appointmentRef = doc(FIREBASE_DB, "appointments", );
+  try {
+    const userDoc = await getDoc(appointmentRef);
+    if (!userDoc.exists()) {
+      // User does not exist, add to the database
+      await setDoc(userRef, {
+        id: uid,
+        name: displayName,
+        phone: phoneNumber,
+        isAdmin: false,
+      });
+    }
+  } catch {
+    console.error("Error adding user to the db");
+  }
+}
+
 // --------------------------
 // Firebase Storage Functions
 // --------------------------
