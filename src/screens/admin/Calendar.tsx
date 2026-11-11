@@ -9,7 +9,7 @@ import {
   DayBreaks,
   DaysOff,
 } from "@components/admin";
-import { useCalendarAdmin } from "@hooks";
+import { useCalendarAdmin, DateDataType } from "@hooks";
 import { ActionButton } from "@components/shared";
 
 const theme = {
@@ -32,12 +32,15 @@ export function Calendar() {
     updateSelectRange,
     resetSelectRange,
     getFormattedDate,
+    getDayOfTheWeek,
+    submitDayDetails,
     marked,
     initialDate,
     RANGE,
     DEFAULT_DAY_DETAILS,
   } = useCalendarAdmin();
-  const [data, setData] = React.useState(DEFAULT_DAY_DETAILS);
+
+  const [data, setData] = React.useState<DateDataType>(DEFAULT_DAY_DETAILS);
 
   const isLongRangeSelected = Boolean(
     longSelectedRange?.start.length && longSelectedRange?.end.length
@@ -52,16 +55,23 @@ export function Calendar() {
     if (!selected && !isLongRangeSelected) return [];
 
     if (!isLongRangeSelected && selected)
-      return [{ id: 0, name: getFormattedDate(selected, "EEEE").slice(0, 3) }];
+      return [
+        {
+          id: getDayOfTheWeek(selected),
+          name: getFormattedDate(selected, "EEEE").slice(0, 3),
+        },
+      ];
 
     const rangeSelectedDays = Array.from(
       new Set(
-        Object.keys(marked).map((day) =>
-          getFormattedDate(day, "EEEE").slice(0, 3)
-        )
+        Object.keys(marked).map((day) => ({
+          id: getDayOfTheWeek(day),
+          name: getFormattedDate(day, "EEEE").slice(0, 3),
+        }))
       )
     );
-    return rangeSelectedDays.map((day, index) => ({ id: index, name: day }));
+
+    return rangeSelectedDays;
   };
 
   const scrollableData = [
@@ -105,6 +115,17 @@ export function Calendar() {
         <DaysOff
           weekDays={selectedRangeWeekDays()}
           isLongRangeSelected={isLongRangeSelected}
+          offDays={data.offDays}
+          offDaysToggler={(dayId: string) => {
+            if (data.offDays.includes(dayId)) {
+              setData({
+                ...data,
+                offDays: data.offDays.filter((id) => id !== dayId),
+              });
+            } else {
+              setData({ ...data, offDays: [...data.offDays, dayId] });
+            }
+          }}
         />
       ),
     },
@@ -143,7 +164,7 @@ export function Calendar() {
           />
           <ActionButton
             label={strings.calendar.saveText}
-            onPress={() => console.log("save")}
+            onPress={() => submitDayDetails(data)}
             touchableStyle={sharedStyles.actionButtonTouchable}
             textStyle={sharedStyles.actionButtonText}
           />

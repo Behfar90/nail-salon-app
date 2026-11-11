@@ -6,20 +6,14 @@ import { colors, strings } from "@utils";
 export function DaysOff({
   weekDays,
   isLongRangeSelected,
+  offDays,
+  offDaysToggler,
 }: {
   weekDays: { id: number; name: string }[];
   isLongRangeSelected: boolean;
+  offDays: string[];
+  offDaysToggler: (dayId: string) => void | ((prevState: string[]) => string[]);
 }) {
-  const [selectedDays, setSelectedDays] = React.useState<string[]>([]);
-
-  const toggleDaySelection = (dayId: string) => {
-    if (selectedDays.includes(dayId)) {
-      setSelectedDays(selectedDays.filter((id) => id !== dayId));
-    } else {
-      setSelectedDays([...selectedDays, dayId]);
-    }
-  };
-
   const renderDayCheckbox = ({
     item,
   }: {
@@ -27,9 +21,9 @@ export function DaysOff({
   }) => (
     <View style={{ paddingLeft: weekDays.length === 1 ? 10 : 0 }}>
       <CheckBox
-        value={selectedDays.includes(item.id)}
+        value={offDays.includes(item.id)}
         color={colors.tertiary}
-        onValueChange={() => toggleDaySelection(item.id)}
+        onValueChange={() => offDaysToggler(item.id)}
       />
       <Text>{item.name}</Text>
     </View>
@@ -48,6 +42,7 @@ export function DaysOff({
         }}
         keyExtractor={(item) => item.id}
       />
+      <Text>{offDays}</Text>
     </View>
   );
 }

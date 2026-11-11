@@ -1,13 +1,13 @@
 import { colors } from "@utils";
-import { eachDayOfInterval, addDays, subDays, format, set } from "date-fns";
+import { eachDayOfInterval, addDays, subDays, format, getDay } from "date-fns";
 import React from "react";
 
 type rangeType = { start: string; end: string };
 
-interface DateDataType {
+export interface DateDataType {
   startAt: string;
   endAt: string;
-  isOff: boolean;
+  offDays: string[];
   breaks: { from: string; to: string }[];
 }
 
@@ -15,7 +15,7 @@ const RANGE = 50; // Max amount of months allowed to scroll to the past/future. 
 const DEFAULT_DAY_DETAILS: DateDataType = {
   startAt: "08:00",
   endAt: "16:00",
-  isOff: false,
+  offDays: [],
   breaks: [
     {
       from: "12:00",
@@ -97,6 +97,12 @@ export function useCalendarAdmin() {
   const getFormattedDate = (date: string, pattern: string) =>
     format(new Date(date), pattern);
 
+  const getDayOfTheWeek = (date: string) => getDay(new Date(date));
+
+  const submitDayDetails = (data: DateDataType) => {
+    console.log(data);
+  };
+
   return {
     selected,
     setSelected,
@@ -104,6 +110,8 @@ export function useCalendarAdmin() {
     updateSelectRange,
     resetSelectRange,
     getFormattedDate,
+    getDayOfTheWeek,
+    submitDayDetails,
     marked,
     initialDate,
     RANGE,
